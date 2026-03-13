@@ -1,0 +1,15 @@
+---
+# tasks file for preinstall-os
+- name: calc swap size
+  ansible.builtin.set_fact:
+    swap_size_mib: "{{ (ansible_memtotal_mb|int) * 2 | int }}"
+    swap_end_mib: "{{ (efi_size_mib|int) + ((ansible_memtotal_mb|int) * 2) | int }}"
+
+- name: partition disk
+  ansible.builtin.import_tasks: partition.yml
+
+- name: create filesystems
+  ansible.builtin.import_tasks: filesystem.yml
+
+- name: mount filesystems
+  ansible.builtin.import_tasks: mount.yml

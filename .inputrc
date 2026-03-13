@@ -1,0 +1,8 @@
+# 设置insert模式下C-a/C-e使用emacs风格
+set editing-mode vi
+set keymap vi-insert
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+
+# 保持normal模式下vim快捷键不变
+set keymap vi-command

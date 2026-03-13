@@ -1,0 +1,13 @@
+---
+# defaults file for preinstall-os
+disk: /dev/nvme0n1
+
+efi_size_mib: 1024
+
+btrfs_mount_opts: "compress=zstd:3,noatime,ssd,space_cache=v2"
+
+btrfs_subvols:
+  - "@"
+  - "@home"
+  - "@nix"
+  - "@tmp"

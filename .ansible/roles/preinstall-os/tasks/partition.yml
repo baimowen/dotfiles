@@ -1,0 +1,29 @@
+---
+- block:
+
+  - name: create efi partition
+    community.general.parted:
+      device: "{{ disk }}"
+      number: 1
+      part_start: 1MiB
+      part_end: "{{ efi_size_mib }}MiB"
+      flags: [boot, esp]
+      state: present
+
+  - name: create swap partition
+    community.general.parted:
+      device: "{{ disk }}"
+      number: 2
+      part_start: "{{ efi_size_mib }}MiB"
+      part_end: "{{ (swap_end_mib|int) + 1 }}MiB"
+      state: present
+
+  - name: create btrfs partition
+    community.general.parted:
+      device: "{{ disk }}"
+      number: 3
+      part_start: "{{ (swap_end_mib|int) + 1 }}MiB"
+      part_end: 100%
+      state: present
+
+  name: partition disk

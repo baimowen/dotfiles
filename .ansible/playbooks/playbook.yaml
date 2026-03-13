@@ -1,0 +1,5 @@
+- name: test
+  hosts: live
+  roles:
+    - preinstall-os
+    - install-os

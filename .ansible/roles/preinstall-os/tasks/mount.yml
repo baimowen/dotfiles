@@ -1,0 +1,77 @@
+---
+- block:
+
+  - name: create mount points
+    ansible.builtin.file:
+      path: "{{ item }}"
+      state: directory
+    loop:
+      - /mnt
+      - /mnt/boot
+      - /mnt/boot/efi
+      - /mnt/home
+      - /mnt/nix
+      - /mnt/tmp
+
+  - name: mount btrfs to create subvol
+    ansible.builtin.mount:
+      path: /mnt
+      src: "{{ disk }}p3"
+      fstype: btrfs
+      state: ephemeral
+
+  - name: get btrfs subvol list
+    ansible.builtin.command: btrfs subvolume list -o /mnt
+    register: btrfs_subvol_list
+    changed_when: false
+
+  - name: create btrfs subvol
+    ansible.builtin.command: "btrfs subvolume create /mnt/{{ item }}"
+    loop: "{{ btrfs_subvols }}"
+    when: btrfs_subvol_list.stdout_lines | length == 0
+
+  - name: umount btrfs
+    ansible.builtin.mount:
+      path: /mnt
+      state: unmounted
+
+  - name: mount root subvol
+    ansible.builtin.mount:
+      path: /mnt
+      src: "{{ disk }}p3"
+      fstype: btrfs
+      opts: "subvol=@,{{ btrfs_mount_opts }}"
+      state: ephemeral
+
+  - name: mount home subvol
+    ansible.builtin.mount:
+      path: /mnt/home
+      src: "{{ disk }}p3"
+      fstype: btrfs
+      opts: "subvol=@home,{{ btrfs_mount_opts }}"
+      state: ephemeral
+
+  - name: mount nix subvol
+    ansible.builtin.mount:
+      path: /mnt/nix
+      src: "{{ disk }}p3"
+      fstype: btrfs
+      opts: "subvol=@nix,{{ btrfs_mount_opts }}"
+      state: ephemeral
+
+  - name: mount tmp subvol
+    ansible.builtin.mount:
+      path: /mnt/tmp
+      src: "{{ disk }}p3"
+      fstype: btrfs
+      opts: "subvol=@tmp,{{ btrfs_mount_opts }}"
+      state: ephemeral
+
+  - name: mount efi
+    ansible.builtin.mount:
+      path: /mnt/boot
+      src: "{{ disk }}p1"
+      fstype: vfat
+      state: ephemeral
+
+  name: mount filesystems

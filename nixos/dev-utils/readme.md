@@ -1,0 +1,4 @@
+```
+direnv allow
+nix develop .#
+```

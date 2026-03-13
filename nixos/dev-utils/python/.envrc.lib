@@ -1,0 +1,29 @@
+use_project_venv() {
+
+  PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  if [ "$(pwd)" = "$PROJECT_ROOT" ]; then
+    return
+  fi
+
+  if [ ! -f ".envrc" ]; then
+    return
+  fi
+
+  PROJECT_DIR="$(basename "$(pwd)")"
+  VENV_PATH="$(pwd)/.venv"
+
+  if [ ! -d "$VENV_PATH" ]; then
+    echo "[direnv] Creating venv for $PROJECT_DIR ..."
+    uv venv "$VENV_PATH"
+  fi
+
+  layout python "$VENV_PATH/bin/python"
+
+  echo "[direnv] >>> Activated project venv: $PROJECT_DIR"
+  # trap 'echo "[direnv] <<< Deactivated project venv: $PROJECT_DIR"' EXIT
+}
+
+if [ "$(pwd)" = "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" ]; then
+  echo "[direnv] >>> Activated flake environment (global)"
+  # trap 'echo "[direnv] <<< Deactivated flake environment (global)"' EXIT
+fi

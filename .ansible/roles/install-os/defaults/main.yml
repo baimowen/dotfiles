@@ -1,0 +1,12 @@
+---
+# defaults file for roles/install-os
+nixos_flake_repo: "https://github.com/baimowen/dotfiles.git"
+
+# nixos_flake_branch: nixvm
+nixos_flake_branch: main
+
+nixos_flake_dir: dotfiles
+
+nixos_host: nixos
+
+nixos_mount_root: /mnt

@@ -1,0 +1,19 @@
+---
+- block:
+
+  - name: format efi
+    ansible.builtin.filesystem:
+      dev: "{{ disk }}p1"
+      fstype: vfat
+
+  - name: format swap
+    ansible.builtin.filesystem:
+      dev: "{{ disk }}p2"
+      fstype: swap
+
+  - name: format btrfs
+    ansible.builtin.filesystem:
+      dev: "{{ disk }}p3"
+      fstype: btrfs
+
+  name: create filesystems

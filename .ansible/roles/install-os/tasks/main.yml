@@ -1,0 +1,56 @@
+---
+# tasks file for roles/install-os
+
+# clone dotfiles repo
+- name: Clone nixos flake repository
+  ansible.builtin.git:
+    repo: "{{ nixos_flake_repo }}"
+    dest: "{{ nixos_flake_dir }}"
+    force: yes
+
+# Generate hardware configuration
+- name: del old hadrware-configuration
+  ansible.builtin.file:
+    path: "{{ nixos_flake_dir }}/nixos/host/hardware-configuration.nix"
+    state: absent
+
+- name: Generate configuration
+  ansible.builtin.command:
+    cmd: nixos-generate-config --root {{ nixos_mount_root }}
+  changed_when: true
+
+- name: Copy hardware configuration
+  ansible.builtin.copy:
+    src: "{{ nixos_mount_root }}/etc/nixos/hardware-configuration.nix"
+    dest: "{{ nixos_flake_dir }}/nixos/host/hardware-configuration.nix"
+    remote_src: true
+
+# Check age key
+- name: Check age key
+  ansible.builtin.stat:
+    path: /root/.age/keys.txt
+  register: age_key
+
+# - name: Fail if age key missing
+#   ansible.builtin.fail:
+#     msg: "Missing /root/.age/keys.txt required for sops-nix"
+#   when: not age_key.stat.exists
+
+- name: create age dir
+  ansible.builtin.file:
+    path: /root/.age
+    state: directory
+
+- name: copy age key
+  ansible.builtin.copy:
+    src: ~/.age/keys.txt
+    dest: /root/.age/keys.txt
+  when: not age_key.stat.exists
+
+# Install NixOS
+- name: Install nixos via flake
+  ansible.builtin.shell: |
+    nix-shell -p sops --run \
+    "SOPS_AGE_KEY_FILE='/root/.age/keys.txt' nixos-install --root {{ nixos_mount_root }} --flake /root/dotfiles/nixos#{{ nixos_host }}"
+  args:
+    executable: /run/current-system/sw/bin/bash
