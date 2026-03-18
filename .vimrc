@@ -11,6 +11,7 @@ set shiftwidth=2   " 自动缩进使用 2 个空格
 
 " 窗口分割 默认: C-w + s/v 水平/垂直
 
+" delete undofile: find . -name '*.un~' -type f | xargs -I {} rm {}
 set undofile      " 启用持久化撤销功能
 set nowrap        " 禁用自动换行
 set splitbelow    " 新窗口在下方

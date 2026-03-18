@@ -1,6 +1,9 @@
+.gitignore
 .vscode/
 nixos/secrets.yaml
 nixos/dev-utils/c_cpp/.direnv/
 nixos/dev-utils/python/.direnv/
 nixos/dev-utils/python/testProject/.direnv/
 nixos/modules/programs/cli/sops-nix/age_baimowen_secret.key
+proxy.sh
+cachix.md

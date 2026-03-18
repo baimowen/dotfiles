@@ -14,6 +14,15 @@
     };
   };
 
+  nix.settings.substituters = [
+    "https://baimowen-dotfiles.cachix.org"
+    "https://cache.nixos.org"
+  ];
+  nix.settings.trusted-public-keys = [
+    "baimowen-dotfiles.cachix.org-1:iHO5ekVnFzTpoBR68dkZSNDtceiuMdZSFsnCzKO1Kc0="
+    "cache.nixos.org-1:6NCHdD59WZ77n4mLLZk8v7pG51v63890q0D2gYJ5l4o="
+  ];
+
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -47,14 +56,23 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-  # Enable OpenGL
+  # Enable Mesa/GPU drivers infrastructure
   # hardware.graphics = {
   #   enable = true;
-  # }; 
+  #   enable32Bit = true;
+  # };
+
+  # load NVIDIA modles on initrd
+  # boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" ];
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
+
+  # Enable bluetooth support.
+  # hardware.bluetooth.enable = true;
+  # Enable bluetooth gui manager.
+  # services.blueman.enable = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -62,10 +80,10 @@
   # Enable sound.
   # services.pulseaudio.enable = true;
   # OR
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
+  # services.pipewire = {
+  #   enable = true;
+  #   pulse.enable = true;
+  # };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -75,11 +93,13 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "incus-admin" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [];
-    # hashedPasswordFile = config.sops.secrets.password_hash.path;
-    hashedPassword = "$6$YmFpbW93ZW4K$RnKOypvF69Te6spi5UCyHffAmG0XcyHQnoZTl8lgayKem6st74P9t/Y0kWD6bKRYJ7LS/AcVSSonPyxkJtxDE/";
+    # generate hashedPassword: pass=$(openssl passwd -6 -salt SALT PASSWORD)
+    # hashedPassword = "$6$YmFpbW93ZW4K$RnKOypvF69Te6spi5UCyHffAmG0XcyHQnoZTl8lgayKem6st74P9t/Y0kWD6bKRYJ7LS/AcVSSonPyxkJtxDE/";
+    hashedPasswordFile = config.sops.secrets.password_hash.path;  # required decrypted secrets/password_hash.yaml context is: $6$SALT$HASH
   };
 
-  users.users.root.hashedPassword = "$6$YmFpbW93ZW4K$RnKOypvF69Te6spi5UCyHffAmG0XcyHQnoZTl8lgayKem6st74P9t/Y0kWD6bKRYJ7LS/AcVSSonPyxkJtxDE/";
+  # users.users.root.hashedPassword = "$6$YmFpbW93ZW4K$RnKOypvF69Te6spi5UCyHffAmG0XcyHQnoZTl8lgayKem6st74P9t/Y0kWD6bKRYJ7LS/AcVSSonPyxkJtxDE/";
+  users.users.root.hashedPasswordFile = config.sops.secrets.password_hash.path;
 
   # programs.firefox.enable = true;
 
@@ -87,6 +107,7 @@
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     vim
+    # cachix
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

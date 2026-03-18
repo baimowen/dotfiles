@@ -88,7 +88,15 @@
         # packages = with pkgs; [ vim ];
         NIX_CONFIG = "experimental-features = nix-command flakes";
       };
+      packages = {
+        # `nix build .#full` or `nix build .#packages.x86_64-linux.full`
+        full = self.nixosConfigurations.nixos.config.system.build.toplevel;
+        # nix build .#iso
+        iso  = self.nixosConfigurations.nixos.config.system.build.isoImage;
+      };
     }) // {
+      # build system: nix build .#nixosConfigurations.nixos.config.system.build.toplevel
+      # show dependency: nix path-info -r ./result
       nixosConfigurations = {
         nixos = mkSystem "x86_64-linux";  # nixos-rebuild switch --flake .#nixos
         # aarch64_nixos = mkSystem "aarch64-linux";  # nixos-rebuild switch --flake .#aarch64_nixos

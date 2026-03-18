@@ -1,0 +1,76 @@
+# dotfiles/.github/workflows/ci.yaml
+name: build and push cachix
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'nixos/**'
+      - 'nixos/flake.lock'
+      - '.github/workflows/ci.yaml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'nixos/**'
+      - 'nixos/flake.lock'
+
+jobs:
+  check-commit:
+    runs-on: ubuntu-latest
+    outputs:
+      should_build: ${{ steps.check.outputs.should_build }}
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: check commit message
+        id: check
+        run: |
+          msg=$(git log -1 --pretty=%B)
+          echo "commit message: $msg"
+          if [[ "$msg" == *"[build cache]"* ]]; then
+            echo "should_build=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_build=false" >> $GITHUB_OUTPUT
+          fi
+
+  build-and-push:
+    needs: check-commit
+    runs-on: ubuntu-latest
+    # 路径匹配并且提交信息中包含 [build cache] 时构建缓存并推送
+    # 以及手动触发时强制构建
+    if: github.event_name == 'workflow_dispatch' || needs.check-commit.outputs.should_build == 'true'
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: install nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - name: create age key
+        run: |
+          mkdir -p ~/.config/sops/age
+          echo "${{ secrets.SOPS_AGE_KEY }}" > ~/.config/sops/age/keys.txt
+          chmod 600 ~/.config/sops/age/keys.txt
+
+      - name: build dotfiles
+        working-directory: ./nixos
+        run: nix build .#nixosConfigurations.nixos.config.system.build.toplevel
+
+      - name: setup cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: baimowen-dotfiles
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - name: done
+        run: |
+          echo "push cachix success."
+          msg=$(git log -1 --pretty=%B)
+          echo "commit: $msg"

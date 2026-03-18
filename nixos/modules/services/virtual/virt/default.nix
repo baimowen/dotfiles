@@ -58,11 +58,8 @@
     "iommu=pt"
   ];
 
-  # Enable OpenGL support
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  # binfmt_misc for running foreign architecture VMs (e.g. ARM on x86)
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" "riscv64-linux" ];
 
   # Create default ISO and VM directories with correct permissions
   systemd.tmpfiles.rules = [
