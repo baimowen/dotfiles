@@ -40,19 +40,27 @@
       # current_password=$(sudo getent shadow nix)
       # preset_password=$(sudo cat /run/secrets-for-users/password_hash)
       # if [ "$current_password" == "$preset_password" ]; then echo "password match"; fi
-      # "password_hash" = {  # <-- This name is decrypt file name: /run/secrets/password_hash
-      #   sopsFile = ./secrets/password_hash.yaml; # <-- Points to your password hash file
-      #   owner = "root";
-      #   group = "root";
-      #   mode = "0400";
-      #   neededForUsers = true;
-      # };
+      "password_hash" = {  # <-- This name is decrypt file name: /run/secrets/password_hash
+        sopsFile = ./secrets/password_hash.yaml; # <-- Points to your password hash file
+        key = "password_hash";  # <-- The key in the YAML file that contains the password hash
+        owner = "root";
+        group = "root";
+        mode = "0400";
+        neededForUsers = true;
+      };
       # when referencing: sops.secrets.<NAME>
       "github_access_token" = {
         sopsFile = ./secrets/github_access_token.yaml;
         # path = "/run/secrets/github/decrypt.yaml";
         owner = "root";
         group = "root";
+        mode = "0400";
+      };
+      "psql_password" = {
+        sopsFile = ./secrets/psql_password.yaml;
+        key = "psql_password";
+        owner = "postgres";
+        group = "postgres";
         mode = "0400";
       };
     };

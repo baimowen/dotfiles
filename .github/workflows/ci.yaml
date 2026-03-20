@@ -22,7 +22,8 @@ jobs:
       should_build: ${{ steps.check.outputs.should_build }}
     steps:
       - name: checkout code
-        uses: actions/checkout@v4
+        # https://github.com/actions/checkout/tag
+        uses: actions/checkout@v6
         with:
           fetch-depth: 2
 
@@ -46,7 +47,7 @@ jobs:
 
     steps:
       - name: checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: install nix
         uses: cachix/install-nix-action@v31
@@ -64,7 +65,8 @@ jobs:
         run: nix build .#nixosConfigurations.nixos.config.system.build.toplevel
 
       - name: setup cachix
-        uses: cachix/cachix-action@v15
+        # https://github.com/cachix/cachix-action/tags
+        uses: cachix/cachix-action@v17
         with:
           name: baimowen-dotfiles
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'

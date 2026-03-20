@@ -36,20 +36,36 @@
     ...
   } @ inputs: let
     mkModules = system: [
-      # { nixpkgs.overlays = [ self.overlays.default ];}
       ./host/configuration.nix
+
+      # overlays:
+      # { nixpkgs.overlays = [ self.overlays.default ];}
+
+      # modules:
       ./modules/programs/cli/sops-nix
       ./modules/programs/cli/direnv
+
+      # editors:
       ./modules/programs/editor/vim
       ./modules/programs/editor/nixvim
+
+      # automation:
       ./modules/programs/cli/ansible
+
+      # virtualization:
       ./modules/services/virtual/containerd
       ./modules/services/virtual/incus
-      # ./modules/services/virtual/virt
-
-      # if you want to use Docker, you need to replace nftables with iptables and comment the incus imports.
-      # ./modules/services/virtual/docker
+      ./modules/services/virtual/virt
+      # ./modules/services/virtual/docker  # if you want to use Docker, you need to replace nftables with iptables and comment the incus imports.
       # ./modules/programs/cli/containerlab
+
+      # databases:
+      ./modules/services/databases/postgresql
+      ./modules/services/databases/postgresql/pgadmin
+
+      # agent:
+      ./modules/services/agent/opencode
+      ./modules/services/agent/mattermost
 
       home-manager.nixosModules.home-manager {
         home-manager = {
