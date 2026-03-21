@@ -40,17 +40,33 @@
   ansible.builtin.file:
     path: /root/.age
     state: directory
+    mode: '0700'
 
 - name: copy age key
   ansible.builtin.copy:
     src: ~/.age/keys.txt
     dest: /root/.age/keys.txt
   when: not age_key.stat.exists
+# - name: inject age key
+#   ansible.builtin.copy:
+#     content: "{{ vault_age_key }}"
+#     dest: /root/.age/keys.txt
+#     mode: '0600'
+#   when: not age_key.stat.exists
 
 # Install NixOS
 - name: Install nixos via flake
   ansible.builtin.shell: |
     nix-shell -p sops --run \
-    "SOPS_AGE_KEY_FILE='/root/.age/keys.txt' nixos-install --root {{ nixos_mount_root }} --flake /root/dotfiles/nixos#{{ nixos_host }}"
+    "nixos-install --root {{ nixos_mount_root }} --flake /root/dotfiles/nixos#{{ nixos_host }}"
   args:
     executable: /run/current-system/sw/bin/bash
+  environment:
+    SOPS_AGE_KEY_FILE: /root/.age/keys.txt
+
+# remove age key after installation
+# always:
+#   - name: Remove AGE key
+#     ansible.builtin.file:
+#       path: /root/.age/keys.txt
+#       state: absent

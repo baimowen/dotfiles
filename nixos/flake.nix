@@ -12,6 +12,7 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    devenv.url = "github:cachix/devenv";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,12 +31,14 @@
     home-manager,
     flake-utils,
     nixvim,
+    devenv,
     sops-nix,
     nix-search-tv,
     npc,
     ...
   } @ inputs: let
     mkModules = system: [
+      # ({...}:{nix.settings.experimental-features = ["nix-command" "flakes"];})
       ./host/configuration.nix
 
       # overlays:
@@ -43,7 +46,9 @@
 
       # modules:
       ./modules/programs/cli/sops-nix
+      ./modules/programs/cli/devenv
       ./modules/programs/cli/direnv
+      # ./modules/programs/cli/cachix
 
       # editors:
       ./modules/programs/editor/vim
@@ -60,12 +65,12 @@
       # ./modules/programs/cli/containerlab
 
       # databases:
-      ./modules/services/databases/postgresql
-      ./modules/services/databases/postgresql/pgadmin
+      # ./modules/services/databases/postgresql
+      # ./modules/services/databases/postgresql/pgadmin
 
       # agent:
-      ./modules/services/agent/opencode
-      ./modules/services/agent/mattermost
+      # ./modules/services/agent/opencode
+      # ./modules/services/agent/mattermost
 
       home-manager.nixosModules.home-manager {
         home-manager = {
@@ -100,15 +105,17 @@
     {
       # overlays.default = import ./overlays;
       formatter = pkgs.nixpkgs-fmt;
-      devShells.default = pkgs.mkShellNoCC {
-        # packages = with pkgs; [ vim ];
-        NIX_CONFIG = "experimental-features = nix-command flakes";
+      # devShells.default = pkgs.mkShellNoCC { };
+      devShells.default = devenv.lib.mkShell {
+        # CACHIX_AUTH_TOKEN = builtins.readFile config.sops.secrets.cachix_auth_token.path;
+        inherit pkgs inputs;
+        modules = [
+          ./devenv.nix
+        ];
       };
       packages = {
         # `nix build .#full` or `nix build .#packages.x86_64-linux.full`
         full = self.nixosConfigurations.nixos.config.system.build.toplevel;
-        # nix build .#iso
-        iso  = self.nixosConfigurations.nixos.config.system.build.isoImage;
       };
     }) // {
       # build system: nix build .#nixosConfigurations.nixos.config.system.build.toplevel

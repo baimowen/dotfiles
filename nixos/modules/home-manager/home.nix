@@ -1,4 +1,4 @@
-{ config, pkgs, lib, settings, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # home-manager switch --flake .#<username>

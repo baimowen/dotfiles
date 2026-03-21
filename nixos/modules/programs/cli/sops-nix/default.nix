@@ -56,6 +56,13 @@
         group = "root";
         mode = "0400";
       };
+      "cachix_auth_token" = {
+        sopsFile = ./secrets/cachix_auth_token.yaml;
+        key = "cachix_auth_token";
+        owner = "nix";
+        group = "users";
+        mode = "0600"
+      };
       "psql_password" = {
         sopsFile = ./secrets/psql_password.yaml;
         key = "psql_password";

@@ -14,15 +14,6 @@
     };
   };
 
-  nix.settings.substituters = [
-    "https://baimowen-dotfiles.cachix.org"
-    "https://cache.nixos.org"
-  ];
-  nix.settings.trusted-public-keys = [
-    "baimowen-dotfiles.cachix.org-1:iHO5ekVnFzTpoBR68dkZSNDtceiuMdZSFsnCzKO1Kc0="
-    "cache.nixos.org-1:6NCHdD59WZ77n4mLLZk8v7pG51v63890q0D2gYJ5l4o="
-  ];
-
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -107,7 +98,6 @@
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     vim
-    # cachix
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

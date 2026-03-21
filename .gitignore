@@ -7,3 +7,5 @@ nixos/dev-utils/python/testProject/.direnv/
 nixos/modules/programs/cli/sops-nix/age_baimowen_secret.key
 proxy.sh
 cachix.md
+nixos/.envrc.bak
+.ansible/group_vars/readme.md
