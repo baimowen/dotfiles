@@ -1,5 +1,5 @@
 # modules/services/smb/smb.nix
-{ config, pkgs, ... }:
+{ config, pkgs, username ? "nix", ... }:
 
 {
   # 启用 Samba 服务
@@ -20,14 +20,16 @@
     shares = {
       shared = {
         comment = "Shared Directory";
-        path = "/home/nix/shared";
+        # path = "/home/nix/shared";
+        path = "/home/${username}/shared";
         writeable = "yes";
         browseable = "yes";
         "guest ok" = "no";  # 需要认证
         "valid users" = "samba";
         "create mask" = "0644";
         "directory mask" = "0755";
-        "force user" = "nix";
+        # "force user" = "nix";
+        "force user" = username;
         "force group" = "users";
       };
       # public = {
@@ -52,8 +54,10 @@
   system.activationScripts.samba-setup = {
     text = ''
       # 创建共享目录
-      mkdir -p /home/nix/shared
-      chmod 777 /home/nix/shared
+      # mkdir -p /home/nix/shared
+      # chmod 777 /home/nix/shared
+      mkdir -p /home/${username}/shared
+      chmod 777 /home/${username}/shared
       
       # 添加 SMB 用户
       if ! ${pkgs.samba}/bin/pdbedit -L | grep -q "^samba:"; then

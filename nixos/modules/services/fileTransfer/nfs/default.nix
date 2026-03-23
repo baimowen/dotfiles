@@ -1,9 +1,9 @@
 # configurations.nix nfs.enable = true;
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, username ? "nix", ... }:
 
 let
   # 定义默认值
-  nfsSharedPath = "/home/nix/shared";  # change your shared directory here
+  nfsSharedPath = "/home/${username}/shared";  # change your shared directory here
   allowedNetwork = "192.168.6.0/24";  # change your network here
   
   # 从模块参数中覆盖默认值
@@ -45,11 +45,11 @@ in
     system.activationScripts.nfs-setup = ''
       if [ ! -d "${sharedPath}" ]; then
         mkdir -p "${sharedPath}"
-        chown nix:users "${sharedPath}"
+        chown ${username}:users "${sharedPath}"
         chmod 777 "${sharedPath}"
         echo "Created NFS share directory: ${sharedPath}"
       else
-        chown nix:users "${sharedPath}" || true
+        chown ${username}:users "${sharedPath}" || true
         chmod 777 "${sharedPath}" || true
        fi
     '';

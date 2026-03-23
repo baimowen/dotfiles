@@ -37,12 +37,41 @@
     npc,
     ...
   } @ inputs: let
+
+    username = "nix";
+    hostname = "nixos";
+
+    # when hm is installed as a standalone:
+    # mkHomeModules = system: let
+    #   pkgs = nixpkgs.legacyPackages.${system};
+    # in
+    #   home-manager.lib.homeManagerConfigurations {
+    #     inherit pkgs;
+    #     extraSpecialArgs = { inherit self inputs username hostname; };
+    #     modules = [
+    #       ./modules/home-manager/home.nix
+    #     ];
+    #   };
+
     mkModules = system: [
-      # ({...}:{nix.settings.experimental-features = ["nix-command" "flakes"];})
+
+      # system configuration revision
+      ({ self, ... }: {
+        system.configurationRevision = self.rev or self.dirtyRev or null;
+      })
+
+      # system configuration:
       ./host/configuration.nix
 
       # overlays:
       # { nixpkgs.overlays = [ self.overlays.default ];}
+
+      # uncomment the following lines to rebuild user configurations
+      # along with the system using `nixos-rebuild`.
+      # but, hm must be installed in standalone mode
+      # (import ./modules/home-manager/home-standalone.nix {
+      #   inherit pkgs inputs username hostname;
+      # })
 
       # modules:
       ./modules/programs/cli/sops-nix
@@ -76,8 +105,8 @@
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          extraSpecialArgs = { inherit self inputs; };
-          users.nix = {  # change your username here
+          extraSpecialArgs = { inherit self inputs username hostname; };
+          users.${username} = {  # change your username here
             imports = [
               ./modules/home-manager/home.nix
               ./modules/programs/cli/bash
@@ -92,11 +121,13 @@
         };
       }
     ];
+
     mkSystem = system: nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit self inputs; };
+      specialArgs = { inherit self inputs username hostname; };
       modules = mkModules system;
     };
+
   in
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};  # precomputed
@@ -120,11 +151,16 @@
     }) // {
       # build system: nix build .#nixosConfigurations.nixos.config.system.build.toplevel
       # show dependency: nix path-info -r ./result
-      nixosConfigurations = {
-        nixos = mkSystem "x86_64-linux";  # nixos-rebuild switch --flake .#nixos
+      nixosConfigurations = {  # nixos-rebuild switch --flake .#hostname
+        "${hostname}" = mkSystem "x86_64-linux";
         # aarch64_nixos = mkSystem "aarch64-linux";  # nixos-rebuild switch --flake .#aarch64_nixos
         # darwin_nixos = mkSystem "x86_64-darwin";
         # add more systems here if needed
       };
+      # when hm is installed as a standalone:
+      # homeConfigurations = {  # nix run home-manager/master -- switch --flake .#username
+      #   "${username}" = mkHomeModules "x86_64-linux";
+      #   "your-username" = mkHomeModules "aarch64-linux";
+      # };
     };
 }

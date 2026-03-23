@@ -1,8 +1,9 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+# man 5 configuration.nix
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, username ? "nix", hostname ? "nixos", ... }:
 
 {
   nix = {
@@ -14,17 +15,17 @@
     };
   };
 
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
-  networking.hostName = "nixos"; # Define your hostname.
+  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = hostname;
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
@@ -80,7 +81,8 @@
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.nix = {
+  # users.users.nix = {
+  users.users.${username} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "incus-admin" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [];

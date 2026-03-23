@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, username ? "nix", ... }:
 
 {
   imports = [
@@ -31,7 +31,8 @@
 
     # --- sops-nix age integration options ---
     age.sshKeyPaths = [];
-    age.keyFile = "/home/nix/.age/keys.txt";
+    # age.keyFile = "/home/nix/.age/keys.txt";
+    age.keyFile = "/home/${username}/.age/keys.txt";
     # --- sops-nix age integration options ---
 
     # go install, need proxy
@@ -61,7 +62,7 @@
         key = "cachix_auth_token";
         owner = "nix";
         group = "users";
-        mode = "0600"
+        mode = "0600";
       };
       "psql_password" = {
         sopsFile = ./secrets/psql_password.yaml;

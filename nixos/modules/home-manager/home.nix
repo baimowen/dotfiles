@@ -1,13 +1,13 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, username ? "nix", ... }:
 
 {
   # home-manager switch --flake .#<username>
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  # home.username = settings.username;
-  # home.homeDirectory = "/home/${settings.username}";
-  home.username = "nix";
-  home.homeDirectory = "/home/nix";
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
+  # home.username = "nix";
+  # home.homeDirectory = "/home/nix";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

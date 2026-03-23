@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  lanaguages.nix.enable = true;
+  languages.nix.enable = true;
   packages = [];
   scripts = {
     "example-script" = {

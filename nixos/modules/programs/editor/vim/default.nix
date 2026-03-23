@@ -1,8 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, username ? "nix", ... }:
 
-let
-  username = "nix";
-in
+# let
+#   username = "nix";
+# in
 {
   programs.vim = {
     enable = true;
