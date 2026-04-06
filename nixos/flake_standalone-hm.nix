@@ -42,21 +42,34 @@
     hostname = "nixos";
 
     # when hm is installed as a standalone:
-    # mkHomeModules = system: let
-    #   pkgs = nixpkgs.legacyPackages.${system};
-    #   # or, if you want to use overlays in hm:
-    #   # pkgs = import nixpkgs {
-    #   #   inherit system;
-    #   #   overlays = [ (import ./overlays) ];  # expose overlays only to hm
-    #   # };
-    # in
-    #   home-manager.lib.homeManagerConfiguration {
-    #     inherit pkgs;
-    #     extraSpecialArgs = { inherit self inputs username hostname; };
-    #     modules = [
-    #       ./modules/home-manager/home.nix
-    #     ];
-    #   };
+    mkHomeModules = system: let
+      # pkgs = nixpkgs.legacyPackages.${system};
+      # or, if you want to use overlays in hm:
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ (import ./overlays) ];  # expose overlays only to hm
+      };
+    in
+      home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit self inputs username hostname; };
+        modules = [
+          ./modules/home-manager/home.nix
+          ./modules/programs/cli/bash
+          ./modules/programs/cli/git
+          ./modules/programs/cli/tmux
+
+          # cli applications
+          ./modules/programs/cli/fzf
+          ./modules/programs/cli/television
+          ./modules/programs/cli/nix-search-tv
+          ./modules/programs/cli/npc
+
+          # gui applications
+          ./modules/programs/gui/dynamic-island-on-hyprland  # dynamic-island depends on quickshell and hyprland
+          ./modules/programs/gui/vincinae                    # application launcher
+        ];
+      };
 
     mkModules = system: [
 
@@ -67,6 +80,13 @@
 
       # system configuration:
       ./host/configuration.nix
+
+      # uncomment the following lines to rebuild user configurations
+      # along with the system using `nixos-rebuild`.
+      # but, hm must be installed in standalone mode
+      # (import ./modules/home-manager/home-standalone.nix {
+      #   inherit pkgs inputs username hostname;
+      # })
 
       # modules:
       ./modules/programs/cli/sops-nix
@@ -96,25 +116,10 @@
       # ./modules/services/agent/opencode
       # ./modules/services/agent/mattermost
 
-      home-manager.nixosModules.home-manager {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = { inherit self inputs username hostname; };
-          users.${username} = {  # change your username here
-            imports = [
-              ./modules/home-manager/home.nix
-              ./modules/programs/cli/bash
-              ./modules/programs/cli/git
-              ./modules/programs/cli/tmux
-              ./modules/programs/cli/fzf
-              ./modules/programs/cli/television
-              ./modules/programs/cli/nix-search-tv
-              ./modules/programs/cli/npc
-            ];
-          };
-        };
-      }
+      # desktop
+      ./desktop/hyprland
+      ./desktop/niri
+      ./desktop/quickshell
     ];
 
     mkSystem = system: nixpkgs.lib.nixosSystem {
@@ -139,10 +144,6 @@
           ./devenv.nix
         ];
       };
-      packages = {  # easy to push to cachix
-        # `nix build .#full` or `nix build .#packages.x86_64-linux.full`
-        full = self.nixosConfigurations.nixos.config.system.build.toplevel;
-      };
     }) // {
       # build system: nix build .#nixosConfigurations.nixos.config.system.build.toplevel
       # show dependency: nix path-info -r ./result
@@ -153,9 +154,9 @@
         # add more systems here if needed
       };
       # when hm is installed as a standalone:
-      # homeConfigurations = {  # nix run home-manager/master -- switch --flake .#username
-      #   "${username}" = mkHomeModules "x86_64-linux";
-      #   "your-username" = mkHomeModules "aarch64-linux";
-      # };
+      homeConfigurations = {  # nix run home-manager/master -- switch --flake .#username
+        "${username}" = mkHomeModules "x86_64-linux";
+        # "your-username" = mkHomeModules "aarch64-linux";
+      };
     };
 }

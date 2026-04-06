@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ self, pkgs, inputs, username... }: {
   system.activationScripts.hm.text = ''
     set -e
     HOME_SWITCH="/home/${username}/.cache"
