@@ -10,7 +10,10 @@
     package = pkgs.nix;
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command" "flakes"
+        # "pipe-operators"
+      ];
       access-tokens = config.sops.secrets.github_access_token.path;
     };
   };

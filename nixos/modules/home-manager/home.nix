@@ -25,6 +25,7 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     pkgs.hello
+    pkgs.nix-index  # search on nixpkgs which command in packages (nix-locate bin/command)
     pkgs.nix-prefetch-git
     pkgs.tree
     # pkgs.fd  # a simple, fast and user-friendly alternative to `find`

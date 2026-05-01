@@ -89,7 +89,8 @@ in {
         "$mod, R, exec, rofi -show drun"
 
         # terminal  q/c or t/w
-        "$mod, Q, exec, kitty"
+        # "$mod, Q, exec, kitty"
+        "$mod, Q, exec, kitty -e vim"  # attach vim on kitty
         "$mod, C, killactive"
 
         # window management

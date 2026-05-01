@@ -14,14 +14,10 @@
       plugins."io.containerd.grpc.v1.cri" = {
         # systemd_cgroup = true;
         # sandbox_image = "registry.k8s.io/pause:latest";
-        registry = {
-          mirrors = {
-            "docker.io" = {
-              endpoint = [
-                "https://mirror.docker.nju.edu.cn"
-              ];
-            };
-          };
+        registry.mirrors = {
+          "docker.io".endpoint = [
+            "https://mirror.docker.nju.edu.cn"
+          ];
         };
       };
     };
