@@ -26,6 +26,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
+  boot.kernelPackages = pkgs.linuxPackages_latest;  # use latest kernel, to prevent the copyfail
 
   # networking.hostName = "nixos"; # Define your hostname.
   networking.hostName = hostname;
@@ -75,7 +76,8 @@
   # Enable sound.
   # services.pulseaudio.enable = true;
   # OR
-  # services.pipewire = {
+  # security.rtkit.enable = true;
+  # services.pipewire = {  # need to add user to audio group, and enable rtkit for realtime scheduling.
   #   enable = true;
   #   pulse.enable = true;
   # };

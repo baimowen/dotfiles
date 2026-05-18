@@ -1,3 +1,4 @@
+#!/usr/bin/env -S bash -euo pipefail
 # clear system caches and user caches
 rm -rf ~/.cache/*
 sudo rm -rf /var/cache/*

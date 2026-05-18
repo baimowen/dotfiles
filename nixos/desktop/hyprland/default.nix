@@ -74,10 +74,22 @@ in {
       env = [
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
+
+        # software renderer
         # "WLR_RENDERER,pixman"
         # "LIBGL_ALWAYS_SOFTWARE,1"
         # "GBM_BACKEND,llvmpipe"
         # "__GLX_VENDOR_LIBRARY_NAME,mesa"
+
+        # wayland fcitx
+        # "LANG,zh_CN.UTF-8"
+        # "LC_CTYPE,en_US.UTF-8"
+        # "XMODIFIERS,@im=fcitx"
+        # "QT_QPA_PLATFORMTHEME,gtk4"
+        # "QT_QPA_PLATFORMTHEME_QT6,gtk4"
+        # "GTK_IM_MODULE,fcitx"
+        # "QT_IM_MODULE,fcitx"
+        # "QT_IM_MODULES,fcitx"
       ];
 
       exec-once = [

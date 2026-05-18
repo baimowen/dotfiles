@@ -145,6 +145,7 @@
         ];
       };
     }) // {
+      # solutions to assertion issues: add `--no-write-lock-file` parameter to the build command
       # build system: nix build .#nixosConfigurations.nixos.config.system.build.toplevel
       # show dependency: nix path-info -r ./result
       nixosConfigurations = {  # nixos-rebuild switch --flake .#hostname
