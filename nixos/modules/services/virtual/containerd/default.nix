@@ -12,7 +12,7 @@
       # [plugins."io.containerd.cri.v1.images".registry.mirrors."docker.io"]
       #   endpoint: []
       plugins."io.containerd.grpc.v1.cri" = {
-        # systemd_cgroup = true;
+        systemd_cgroup = true;
         # sandbox_image = "registry.k8s.io/pause:latest";
         registry.mirrors = {
           "docker.io".endpoint = [
@@ -23,9 +23,5 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    nerdctl
-    calicoctl
-    etcd
-  ];
+  environment.systemPackages = with pkgs; [ nerdctl calicoctl etcd ];
 }

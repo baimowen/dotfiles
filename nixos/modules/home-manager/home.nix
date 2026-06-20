@@ -1,6 +1,11 @@
 { config, pkgs, lib, username ? "nix", ... }:
 
 {
+  imports = [
+    ./programs
+  ];
+
+  # nix run home-manager/master -- init
   # home-manager switch --flake .#<username>
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -16,7 +21,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "25.05"; # Please read the comment before changing.
+  home.stateVersion = "25.11"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -25,20 +30,6 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     pkgs.hello
-    pkgs.nix-index  # search on nixpkgs which command in packages (nix-locate bin/command)
-    pkgs.nix-prefetch-git
-    pkgs.tree
-    # pkgs.fd  # a simple, fast and user-friendly alternative to `find`
-    pkgs.tldr  # Simplified and community-driven man pages
-    pkgs.jq  # Lightweight and flexible command-line JSON processor
-    pkgs.yq  # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
-    pkgs.dos2unix  # Convert text files with DOS or Mac line breaks to Unix line breaks and vice versa
-    # pkgs.hyperfine  # Command-line benchmarking tool
-    pkgs.nitch  # Incredibly fast system fetch written in nim
-    # pkgs.duf  # Disk Usage/Free Utility - a better 'df' alternative
-    # pkgs.ncdu  # Disk usage analyzer with an ncurses interface
-    # pkgs.rsync  # Fast incremental file transfer utility
-    # pkgs.rsyncy  # Progress bar wrapper for rsync
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

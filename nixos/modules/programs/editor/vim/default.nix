@@ -24,7 +24,7 @@
       
       " 窗口分割 默认: C-w + s/v 水平/垂直
       
-      set undofile      " 启用持久化撤销功能
+      " set undofile      " 启用持久化撤销功能
       set nowrap        " 禁用自动换行
       set splitbelow    " 新窗口在下方
       set cursorline    " 高亮当前行
@@ -34,8 +34,8 @@
       syntax on
       filetype plugin indent on
       
-      set laststatus=2                                              " 始终显示状态栏
-      set statusline=%F%m%r%h%w\ %=[%Y]\ [%{&ff}]\ [%l,%v]\ [%p%%]  " 状态栏ui设置
+      " set laststatus=2                                              " 始终显示状态栏
+      " set statusline=%F%m%r%h%w\ %=[%Y]\ [%{&ff}]\ [%l,%v]\ [%p%%]  " 状态栏ui设置
       
       " Search down into subfolders
       " Provides tab-completion for all file-related tasks

@@ -1,0 +1,3 @@
+environment {
+    LC_MESSAGES "zh_CN.UTF-8"
+}

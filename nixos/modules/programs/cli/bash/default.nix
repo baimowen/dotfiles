@@ -37,17 +37,15 @@
         free = "free -h";
 
         # >>> git >>>
-        lg = "lazygit";
+        # lg = "lazygit";
         gl = "git log --all --graph --color=auto";
         gs = "git status";
         ga = "git add";
         gc = "git commit -m";
-        gps = "git push";
-        gpl = "git pull --rebase";
-        gco = "git checkout";
-        gcb = "git checkout -b";
-        gplb = "git pull --rebase origin $(git rev-parse --abbrev-ref HEAD)";
-        gplm = "git pull --rebase origin main";
+        gp = "git push";
+        # gpr = "git pull --rebase";
+        # gplb = "git pull --rebase origin $(git rev-parse --abbrev-ref HEAD)";
+        # gplm = "git pull --rebase origin main";
         # <<< git <<<
 
         # >>> tmux >>>
@@ -63,9 +61,9 @@
         tn = "tmux next-window";
         tp = "tmux previous-window";
         # tmux panes manage
-        th = "tmux split-window -h";
-        tv = "tmux split-window -v";
-        tsp = "tmux select-pane -t";
+        tsh = "tmux split-window -h";
+        tsv = "tmux split-window -v";
+        # tsp = "tmux select-pane -t";
         tkp = "tmux kill-pane";
         # <<< tmux <<<
 
@@ -78,9 +76,15 @@
         # <<< bat <<<
 
         # >>> nixos >>>
-        hms = "home-manager switch";
         nrs = "sudo nixos-rebuild switch";
-        ncg = "sudo nix-collect-garbage -d";
+        hms = "home-manager switch";
+        nph = "nix profile history --profile /nix/var/nix/profiles/system";  # list current system generations(new cli)
+        nel = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";  # list current system generations(old cli)
+        hgl = "home-manager generations";  # list home-manager generations
+        nsq = "nix-store -q --references /run/current-system/sw";  # list installed pkgs on /nix/store
+        ncg = "sudo nix-collect-garbage --delete-older-than 30d";  # sudo nix-env -p /nix/var/nix/profiles/system --list-generations
+        # ncg = "sudo nix-collect-garbage -d";
+        ns = "nix-search-tv print | fzf --preview 'nix-search-tv preview {}' --scheme history";
         # <<< nixos <<<
     };
 

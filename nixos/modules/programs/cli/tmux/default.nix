@@ -22,7 +22,7 @@
       # │                         Options                          │
       # ╰──────────────────────────────────────────────────────────╯
       set -g default-terminal "tmux-256color"
-      setoption -sa terminal-overrides ",xterm*:Tc"
+      # setoption -sa terminal-overrides ",xterm*:Tc"
       set -g base-index 1
       set -g pane-base-index 1
       set -g renumber-windows on
@@ -40,7 +40,21 @@
       # ╭──────────────────────────────────────────────────────────╮
       # │                       functions                          │
       # ╰──────────────────────────────────────────────────────────╯
-      # none
+      # fzf integration
+      # search sessions
+      bind C-e display-popup -E "\
+        tmux list-sessions -F '#{?session_attached,,#{session+name}}' | \
+        sed '/^$/d' |\
+        fzf --reverse --header jump-to-session |\
+        xargs tmux switch-client -t"
+
+      # search windows in current session
+      bind C-f display-popup -E "\
+        tmux list-windows -F '#{window_index} #{window_name}' |\
+        sed '/^$/d' |\
+        fzf --reverse --header jump-to-window |\
+        cut -d ' ' -f 1 |\
+        xargs tmux select-window -t"
 
       # ╭──────────────────────────────────────────────────────────╮
       # │                        bindkeys                          │
@@ -97,22 +111,6 @@
 
       # show a promp to kill a window by id with `prefix X`
       bind-key X command-prompt -p "kill window" "kill-window -t '%%'"
-
-      # fzf integration
-      # search sessions
-      bind C-e display-popup -E "\
-        tmux list-sessions -F '#{?session_attached,,#{session+name}}' | \
-        sed '/^$/d' |\
-        fzf --reverse --header jump-to-session |\
-        xargs tmux switch-client -t"
-
-      # search windows in current session
-      bind C-f display-popup -E "\
-        tmux list-windows -F '#{window_index} #{window_name}' |\
-        sed '/^$/d' |\
-        fzf --reverse --header jump-to-window |\
-        cut -d ' ' -f 1 |\
-        xargs tmux select-window -t"
     '';
 
     plugins = with pkgs; [

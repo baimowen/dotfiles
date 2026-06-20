@@ -12,4 +12,7 @@
   };
 
   networking.firewall.allowedTCPPorts = [ 8065 ];
+
+  # home.packages = with pkgs; [ opencode ];
+  environment.systemPackages = with pkgs; [ opencode ];
 }

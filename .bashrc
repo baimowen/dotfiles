@@ -1,1 +1,1 @@
-alias ls='LC_ALL=C ls -alh --group-directories-first --sort=name --color=auto'
+alias ls='LC_ALL=C ls -lah --group-directories-first --sort=name --color=auto'

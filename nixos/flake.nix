@@ -2,8 +2,6 @@
   description = "nixosConfiguration";
 
   inputs = {
-    # github:nixos/nixpkgs?ref=nixpkgs-unstable;
-    # github:nixos/nixpkgs?ref=master;
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -20,6 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-search-tv.url = "github:3timeslazy/nix-search-tv";
+    zen-browser.url = "github:zen-browser/desktop/0d3be8142157fd295fd114b6fbab76038a438b32";
     npc = {
       # A CLI tool to access the history of Nixpkgs channels.
       url = "github:samestep/npc";
@@ -36,6 +35,7 @@
     devenv,
     sops-nix,
     nix-search-tv,
+    zen-browser,
     npc,
     ...
   } @ inputs: let
@@ -44,21 +44,34 @@
     hostname = "nixos";
 
     # when hm is installed as a standalone:
-    # mkHomeModules = system: let
-    #   pkgs = nixpkgs.legacyPackages.${system};
-    #   # or, if you want to use overlays in hm:
-    #   # pkgs = import nixpkgs {
-    #   #   inherit system;
-    #   #   overlays = [ (import ./overlays) ];  # expose overlays only to hm
-    #   # };
-    # in
-    #   home-manager.lib.homeManagerConfiguration {
-    #     inherit pkgs;
-    #     extraSpecialArgs = { inherit self inputs username hostname; };
-    #     modules = [
-    #       ./modules/home-manager/home.nix
-    #     ];
-    #   };
+    mkHomeModules = system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+      # or, if you want to use overlays in hm:
+      # pkgs = import nixpkgs {
+      #   inherit system;
+      #   overlays = [ (import ./overlays) ];  # expose overlays only to hm
+      # };
+    in
+      home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit self inputs username hostname; };
+        modules = [
+          ./modules/home-manager/home.nix
+          ./modules/programs/cli/bash
+          ./modules/programs/cli/git
+          ./modules/programs/cli/tmux
+
+          # cli applications
+          ./modules/programs/cli/fzf
+          ./modules/programs/cli/television
+          ./modules/programs/cli/nix-search-tv
+          ./modules/programs/cli/npc
+
+          # desktop
+          ./modules/home-manager/programs/lf
+          ./modules/home-manager/programs
+        ];
+      };
 
     mkModules = system: [
 
@@ -67,8 +80,19 @@
         system.configurationRevision = self.rev or self.dirtyRev or null;
       })
 
+      ({ pkgs, ... }: {
+        environment.systemPackages = with pkgs; [ vim util-linux binutils pciutils inetutils ];
+      })
+
       # system configuration:
       ./host/configuration.nix
+
+      # uncomment the following lines to rebuild user configurations
+      # along with the system using `nixos-rebuild`.
+      # but, hm must be installed in standalone mode
+      # (import ./modules/home-manager/home-standalone.nix {
+      #   inherit pkgs inputs username hostname;
+      # })
 
       # modules:
       ./modules/programs/cli/sops-nix
@@ -85,8 +109,8 @@
 
       # virtualization:
       ./modules/services/virtual/containerd
-      ./modules/services/virtual/incus
       ./modules/services/virtual/virt
+      # ./modules/services/virtual/incus
       # ./modules/services/virtual/docker  # if you want to use Docker, you need to replace nftables with iptables and comment the incus imports.
       # ./modules/programs/cli/containerlab
 
@@ -94,29 +118,11 @@
       # ./modules/services/databases/postgresql
       # ./modules/services/databases/postgresql/pgadmin
 
-      # agent:
-      # ./modules/services/agent/opencode
-      # ./modules/services/agent/mattermost
+      # cli applications:
+      # ./modules/programs/cli
 
-      home-manager.nixosModules.home-manager {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = { inherit self inputs username hostname; };
-          users.${username} = {  # change your username here
-            imports = [
-              ./modules/home-manager/home.nix
-              ./modules/programs/cli/bash
-              ./modules/programs/cli/git
-              ./modules/programs/cli/tmux
-              ./modules/programs/cli/fzf
-              ./modules/programs/cli/television
-              ./modules/programs/cli/nix-search-tv
-              ./modules/programs/cli/npc
-            ];
-          };
-        };
-      }
+      ./desktop
+      ./modules/programs/cli/foot
     ];
 
     mkSystem = system: nixpkgs.lib.nixosSystem {
@@ -133,19 +139,16 @@
     {
       # overlays.default = import ./overlays;
       formatter = pkgs.nixpkgs-fmt;
-      # devShells.default = pkgs.mkShellNoCC { };
-      devShells.default = devenv.lib.mkShell {
-        # CACHIX_AUTH_TOKEN = builtins.readFile config.sops.secrets.cachix_auth_token.path;
-        inherit pkgs inputs;
-        modules = [
-          ./devenv.nix
-        ];
-      };
-      packages = {  # easy to push to cachix
-        # `nix build .#full` or `nix build .#packages.x86_64-linux.full`
-        full = self.nixosConfigurations.nixos.config.system.build.toplevel;
-      };
+      devShells.default = pkgs.mkShellNoCC { };
+      # devShells.default = devenv.lib.mkShell {
+      #   # CACHIX_AUTH_TOKEN = builtins.readFile config.sops.secrets.cachix_auth_token.path;
+      #   inherit pkgs inputs;
+      #   modules = [
+      #     ./devenv.nix
+      #   ];
+      # };
     }) // {
+      # solutions to assertion issues: add `--no-write-lock-file` parameter to the build command
       # build system: nix build .#nixosConfigurations.nixos.config.system.build.toplevel
       # show dependency: nix path-info -r ./result
       nixosConfigurations = {  # nixos-rebuild switch --flake .#hostname
@@ -155,9 +158,9 @@
         # add more systems here if needed
       };
       # when hm is installed as a standalone:
-      # homeConfigurations = {  # nix run home-manager/master -- switch --flake .#username
-      #   "${username}" = mkHomeModules "x86_64-linux";
-      #   "your-username" = mkHomeModules "aarch64-linux";
-      # };
+      homeConfigurations = {  # nix run home-manager/master -- switch --flake .#username
+        "${username}" = mkHomeModules "x86_64-linux";
+        # "your-username" = mkHomeModules "aarch64-linux";
+      };
     };
 }
