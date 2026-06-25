@@ -1,10 +1,7 @@
 { pkgs, inputs, username ? "nix", ... }:
 
 {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
-
+  imports = [ inputs.sops-nix.nixosModules.sops ];
 
   # [sops-nix](https://saylesss88.github.io/installation/enc/sops-nix.html)
   # [sops-nix](https://getsops.io/docs/#encrypting-with-gnupg-subkeys)
@@ -76,8 +73,6 @@
 
   environment.systemPackages = with pkgs; [ sops age gnupg pinentry-all ];
 
-  programs.gnupg.agent = {
-    enable = true;
-    # enableSSHSupport = true;
-  };
+  programs.gnupg.agent.enable = true;
+  # programs.gnupg.agent.enableSSHSupport = true;
 }

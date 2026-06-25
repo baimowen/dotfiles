@@ -2,24 +2,26 @@
 
 {
   home.packages = [
-    pkgs.xdg-user-dirs
-    pkgs.wmenu
-    pkgs.dmenu-wayland
-    pkgs.wlroots_0_20
-    pkgs.wl-clipboard
-    pkgs.slurp
-    pkgs.grim
-    pkgs.swaybg
-    pkgs.networkmanagerapplet
-    pkgs.pavucontrol
-    pkgs.blueman
-    pkgs.brightnessctl
-    pkgs.libnotify
-    pkgs.hyprlauncher
-    pkgs.thunar
-    pkgs.unzip
-    pkgs.mpv
-    pkgs.ffmpeg
+    # uitls
+    pkgs.perl
     pkgs.bat
+    pkgs.unzip
+    pkgs.yt-dlp
+    pkgs.imv
+    pkgs.scrcpy
+    pkgs.cpufetch
+    pkgs.peaclock
+    pkgs.parsec-bin
+    pkgs.obsidian
+    pkgs.openlist
+    pkgs.termius
+    pkgs.winboat
+    pkgs.kdePackages.okular  # pdf reader
+    pkgs.kdePackages.kdenlive
+    pkgs.losslesscut-bin
+    pkgs.qbittorrent-enhanced
+
+    # game
+    pkgs.osu-lazer-bin
   ];
 }

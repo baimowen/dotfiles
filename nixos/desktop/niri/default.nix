@@ -1,9 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.niri = {
     enable = true;
-    # useNautilus = true;
+    useNautilus = true;
     # settings = {
     #   outputs."eDP-1".scale = 1.25;
     # };

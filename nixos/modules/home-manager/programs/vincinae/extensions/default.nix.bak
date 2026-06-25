@@ -1,0 +1,13 @@
+{ lib, pkgs, ... }:
+
+{
+  imports = map 
+    (name: ./. + "/${name}")
+    (builtins.filter
+      (name:
+        builtins.hasSuffix ".nix" name &&
+        name != "default.nix"
+      )
+      (builtins.attrNames (builtins.readDir ./.));
+    );
+}

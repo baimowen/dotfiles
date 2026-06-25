@@ -78,11 +78,10 @@
         # >>> nixos >>>
         nrs = "sudo nixos-rebuild switch";
         hms = "home-manager switch";
-        nph = "nix profile history --profile /nix/var/nix/profiles/system";  # list current system generations(new cli)
-        nel = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";  # list current system generations(old cli)
-        hgl = "home-manager generations";  # list home-manager generations
+        nrl = "nixos-rebuild list-generations";
+        hgl = "home-manager generations";
         nsq = "nix-store -q --references /run/current-system/sw";  # list installed pkgs on /nix/store
-        ncg = "sudo nix-collect-garbage --delete-older-than 30d";  # sudo nix-env -p /nix/var/nix/profiles/system --list-generations
+        ncg = "sudo nix-collect-garbage --delete-older-than 30d";
         # ncg = "sudo nix-collect-garbage -d";
         ns = "nix-search-tv print | fzf --preview 'nix-search-tv preview {}' --scheme history";
         # <<< nixos <<<

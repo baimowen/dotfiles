@@ -16,9 +16,10 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     // `spawn "command" "option" "para";` or `spawn-sh "command -option para";`
     // spawn-sh will have additional performance overhead
-    Mod+T hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
+    Mod+E hotkey-overlay-title="Open a FileManager: nautilus" { spawn "nautilus"; }
+    Mod+D hotkey-overlay-title="Run an Application: vicinae" { spawn "vicinae" "open"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.

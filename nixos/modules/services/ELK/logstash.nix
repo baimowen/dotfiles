@@ -21,7 +21,8 @@
   };
 
   environment.systemPackages = with pkgs; [ logstash ];
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "logstash"
-  ];
+  # nixpkgs.config.allowUnfreePredicate = pkg:
+  #   builtins.elem (lib.getName pkg) [
+  #     "logstash"
+  #   ];
 }

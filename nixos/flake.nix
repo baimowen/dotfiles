@@ -18,12 +18,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-search-tv.url = "github:3timeslazy/nix-search-tv";
-    zen-browser.url = "github:zen-browser/desktop/0d3be8142157fd295fd114b6fbab76038a438b32";
-    npc = {
-      # A CLI tool to access the history of Nixpkgs channels.
-      url = "github:samestep/npc";
+    nix-sweep.url = "github:jzbor/nix-sweep";
+    # zen-browser.url = "github:github:0xc000022070/zen-browser-flake/8ce7d926dbec820ab5686d599bc6a1bd19ed1273";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake?rev=8ce7d926dbec820ab5686d599bc6a1bd19ed1273";
+    # npc = {
+    #   # A CLI tool to access the history of Nixpkgs channels.
+    #   url = "github:samestep/npc";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    quickshell = {
+      url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # caelestia-shell = {
+    #   url = "github:caelestia-dots/shell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    swww.url = "github:LGFae/swww";
+    vicinae.url = "github:vicinaehq/vicinae";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
 
   outputs = {
@@ -35,13 +52,17 @@
     devenv,
     sops-nix,
     nix-search-tv,
+    nix-sweep,
     zen-browser,
-    npc,
+    # npc,
+    quickshell,
+    # caelestia-shell,
+    dankMaterialShell,
+    swww,
+    vicinae,
+    spicetify-nix,
     ...
   } @ inputs: let
-
-    username = "nix";
-    hostname = "nixos";
 
     # when hm is installed as a standalone:
     mkHomeModules = system: let
@@ -54,7 +75,7 @@
     in
       home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = { inherit self inputs username hostname; };
+        extraSpecialArgs = { inherit self inputs; };
         modules = [
           ./modules/home-manager/home.nix
           ./modules/programs/cli/bash
@@ -68,7 +89,34 @@
           ./modules/programs/cli/npc
 
           # desktop
+          # ./desktop/caelestia-shell
+          # ./desktop/quickshell
+          ./modules/home-manager/programs/wl-kbptr
           ./modules/home-manager/programs/lf
+          ./modules/home-manager/programs/kitty
+          ./modules/home-manager/programs/nm-applet     
+          ./modules/home-manager/programs/blueman-applet
+          ./modules/home-manager/programs/hyprpolkitagent
+          ./modules/home-manager/programs/hypridle
+          # ./modules/home-manager/programs/hyprlock
+          ./modules/home-manager/programs/hyprlauncher  
+          ./modules/home-manager/programs/vicinae
+          ./modules/home-manager/programs/swww
+          ./modules/home-manager/programs/swaync
+          # ./modules/home-manager/programs/mako
+          ./modules/home-manager/programs/mpd
+          ./modules/home-manager/programs/mpv
+          ./modules/home-manager/programs/playerctl
+          ./modules/home-manager/programs/neomutt
+          ./modules/home-manager/programs/waybar
+          ./modules/home-manager/programs/termfilechooser
+          ./modules/home-manager/programs/translate-shell
+          ./modules/home-manager/programs/obs-studio
+          ./modules/home-manager/programs/kdeconnect
+          # ./modules/home-manager/programs/scrcpy
+          ./modules/home-manager/programs/onlyoffice
+          ./modules/home-manager/programs/spicetify-nix
+          ./modules/home-manager/programs/cava
           ./modules/home-manager/programs
         ];
       };
@@ -99,10 +147,12 @@
       ./modules/programs/cli/devenv
       ./modules/programs/cli/direnv
       # ./modules/programs/cli/cachix
+      ./modules/programs/cli/nix-sweep
 
       # editors:
       ./modules/programs/editor/vim
-      ./modules/programs/editor/nixvim
+      # ./modules/programs/editor/nixvim
+      ./modules/programs/editor/vscode
 
       # automation:
       ./modules/programs/cli/ansible
@@ -115,19 +165,29 @@
       # ./modules/programs/cli/containerlab
 
       # databases:
-      # ./modules/services/databases/postgresql
-      # ./modules/services/databases/postgresql/pgadmin
+      ./modules/services/databases/postgresql
+      ./modules/services/databases/postgresql/pgadmin
+
+      # log
+      ./modules/services/ELK/logstash.nix
+
+      # pane
+      ./modules/services/cockpit
 
       # cli applications:
-      # ./modules/programs/cli
+      ./modules/programs/cli
 
-      ./desktop
-      ./modules/programs/cli/foot
+      ./envVars.nix
+      ./desktop/gnome
+      ./desktop/niri
+      # ./modules/programs/browser/zen
+      ./modules/programs/steam
+      ./modules/programs/gui/localsend
     ];
 
     mkSystem = system: nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit self inputs username hostname; };
+      specialArgs = { currenSystem = system; inherit self inputs; };
       modules = mkModules system;
     };
 
@@ -152,14 +212,14 @@
       # build system: nix build .#nixosConfigurations.nixos.config.system.build.toplevel
       # show dependency: nix path-info -r ./result
       nixosConfigurations = {  # nixos-rebuild switch --flake .#hostname
-        "${hostname}" = mkSystem "x86_64-linux";
+        "nixos" = mkSystem "x86_64-linux";
         # aarch64_nixos = mkSystem "aarch64-linux";  # nixos-rebuild switch --flake .#aarch64_nixos
         # darwin_nixos = mkSystem "x86_64-darwin";
         # add more systems here if needed
       };
       # when hm is installed as a standalone:
       homeConfigurations = {  # nix run home-manager/master -- switch --flake .#username
-        "${username}" = mkHomeModules "x86_64-linux";
+        "nix" = mkHomeModules "x86_64-linux";
         # "your-username" = mkHomeModules "aarch64-linux";
       };
     };

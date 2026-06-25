@@ -30,7 +30,7 @@ input {
         // dwtp
         // drag false
         // drag-lock
-        // natural-scroll  // 触摸板自然滚动
+        natural-scroll  // 触摸板自然滚动
         // accel-speed 0.2
         // accel-profile "flat"
         // scroll-method "two-finger"
@@ -71,7 +71,7 @@ input {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-/-output "eDP-1" {
+output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -84,7 +84,7 @@ input {
     mode "1920x1080@60.000"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 2
+    scale 1.25
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -99,9 +99,9 @@ input {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    position x=1280 y=0
+    position x=0 y=0
 }
-output "Virtual-1" {
+/-output "Virtual-1" {
     mode "1920x1080@60.000"
     scale 1.25
     transform "normal"

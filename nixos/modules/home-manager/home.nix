@@ -2,8 +2,18 @@
 
 {
   imports = [
-    ./programs
+    ./homeVars.nix
   ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "obsidian"
+      "parsec-bin"
+      "termius"
+      "spotify"
+      "catppuccin"
+      "osu-lazer-bin"
+    ];
 
   # nix run home-manager/master -- init
   # home-manager switch --flake .#<username>

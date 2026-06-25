@@ -4,7 +4,8 @@
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "waybar"
+spawn-at-startup "swaybg -i ~/Pictures/wallpaper/ddj64ow-7b05f44f-adde-46aa-b82b-6be9fd14bc65.jpg & disown"
+// spawn-at-startup "waybar & disown"
 // polkit-gnome startup
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" 
 

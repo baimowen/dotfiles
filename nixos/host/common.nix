@@ -4,7 +4,7 @@
   # keyboard and inputmethod
   console.useXkbConfig = true; # use xkb.options in tty.
   # Configure keymap in X11
-  services.xserver.xkb.layout = "us";
+  # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
   # Select internationalisation properties.
   # console = {
@@ -25,17 +25,20 @@
         kdePackages.fcitx5-chinese-addons
         kdePackages.fcitx5-with-addons
         fcitx5-rime
+        rime-ice
       ];
       fcitx5.waylandFrontend = true;
     };
   };
 
+  environment.systemPackages = with pkgs; [ mesa-demos libnotify ];
+
   # video
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
-  environment.systemPackages = with pkgs; [ mesa-demos ];
+  # services.xserver.enable = true;
+  # services.xserver.videoDrivers = [ "amdgpu" ];
+  # environment.systemPackages = with pkgs; [ mesa-demos ];
   # load amd modules on initrd
   # boot.initrd.kernelModules = [ "amdgpu" ];
   # load NVIDIA modles on initrd
@@ -60,11 +63,13 @@
 
   # power supply
   services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
   
   # notice service
   services.dunst.enable = true;
   services.dunst.enableWayland = true;
   services.dbus.enable = true;
+  # environment.systemPackages = with pkgs; [ libnotify ];
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;

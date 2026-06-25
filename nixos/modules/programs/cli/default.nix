@@ -5,6 +5,7 @@
     pkgs.nix-index  # search on nixpkgs which command in packages (nix-locate bin/command)
     pkgs.nix-prefetch-git
     pkgs.tree
+    pkgs.xz
     pkgs.lf
     pkgs.tldr  # Simplified and community-driven man pages
     pkgs.jq  # Lightweight and flexible command-line JSON processor
@@ -16,8 +17,10 @@
     pkgs.ncdu  # Disk usage analyzer with an ncurses interface
     pkgs.rsync  # Fast incremental file transfer utility
     # pkgs.rsyncy  # Progress bar wrapper for rsync
+    pkgs.hexdump
     pkgs.nmap
     pkgs.tcpdump
     pkgs.w3m
+    pkgs.ueberzugpp  # terminal image preview
   ];
 }

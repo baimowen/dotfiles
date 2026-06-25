@@ -1,6 +1,8 @@
 .gitignore
 .vscode/
 .ansible/group_vars/readme.md
+.config/hypr
+.config/nix
 nixos/secrets.yaml
 nixos/flake_module_hm.nix
 nixos/.envrc.bak

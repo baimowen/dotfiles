@@ -66,4 +66,5 @@
     "d /var/lib/libvirt/isos 0755 qemu-libvirtd kvm -"
     "d /var/lib/libvirt/images 0755 qemu-libvirtd kvm -"
   ];
+  systemd.services.libvirtd.wantedBy = [ "multi-user.target" ];
 }
