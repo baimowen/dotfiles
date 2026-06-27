@@ -4,7 +4,7 @@
 
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
-window-rule {
+/-window-rule {
     // This regular expression is intentionally made as specific as possible,
     // since this is the default config, and we want no false positives.
     // You can get away with just app-id="wezterm" if you want.
@@ -13,7 +13,7 @@ window-rule {
 }
 
 // Open the Firefox picture-in-picture player as floating by default.
-window-rule {
+/-window-rule {
     // This app-id regular expression will work for both:
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
@@ -39,5 +39,29 @@ window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
     opacity 0.85
+    background-effect {
+        xray true
+        blur true
+        // blur {
+        //     on
+        // }
+    }
     draw-border-with-background false
+}
+/-layer-rule {
+    // get namespace: niri msg layers / niri msg pick-window
+    match namespace=""
+    background-effect {
+        xray true
+        blur true
+        // blur {
+        //     on
+        // }
+    }
+}
+// open in floating mode
+window-rule {
+    match app-id="localsend_app"  // get app-id: niri msg pick-window
+    // match app-id=""
+    open-floating true
 }

@@ -90,7 +90,7 @@
 
           # desktop
           # ./desktop/caelestia-shell
-          # ./desktop/quickshell
+          ./desktop/quickshell
           ./modules/home-manager/programs/wl-kbptr
           ./modules/home-manager/programs/lf
           ./modules/home-manager/programs/kitty
@@ -108,7 +108,7 @@
           ./modules/home-manager/programs/mpv
           ./modules/home-manager/programs/playerctl
           ./modules/home-manager/programs/neomutt
-          ./modules/home-manager/programs/waybar
+          # ./modules/home-manager/programs/waybar
           ./modules/home-manager/programs/termfilechooser
           ./modules/home-manager/programs/translate-shell
           ./modules/home-manager/programs/obs-studio
@@ -180,7 +180,9 @@
       ./envVars.nix
       ./desktop/gnome
       ./desktop/niri
+      ./desktop/dms
       # ./modules/programs/browser/zen
+      ./modules/programs/proxy
       ./modules/programs/steam
       ./modules/programs/gui/localsend
     ];

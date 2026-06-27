@@ -26,7 +26,7 @@
         cp = "cp -i";
         mv = "mv -i";
         rm = "rm -i";
-        ls = "LC_ALL=C ls -alh --group-directories-first --sort=name --color=auto";
+        ls = "LC_COLLATE=C LC_CTYPE=en_US.UTF-8 ls -alh --group-directories-first --sort=name --color=auto";
         grep = "grep -iE --color=auto";
         # cat = "bat";
         v = "nvim";

@@ -40,46 +40,7 @@
 
   programs.xwayland.enable = true;
 
-  environment.systemPackages = [
-    # de
-    # pkgs.wl-kbptr  # see: https://github.com/moverest/wl-kbptr
-    pkgs.qt5.qtwayland
-    pkgs.qt6.qtwayland
-    pkgs.xwayland-satellite  # xwayland 兼容层
-    pkgs.wlr-randr
-    pkgs.wlrctl  # move pointer
-    pkgs.pavucontrol
-    pkgs.wl-clipboard
-    pkgs.clipse
-    pkgs.grim
-    pkgs.slurp
-    pkgs.gradia
-    pkgs.swaybg
-    pkgs.swww
-    pkgs.waypaper
-    pkgs.ffmpeg
-    pkgs.nautilus
-    pkgs.nautilus-python
-    pkgs.nautilus-open-any-terminal  # need to `ln -s /usr/bin/kitty /use/bin/gnoe-terminal
-    pkgs.poppler
-    pkgs.tumbler
-    pkgs.ffmpegthumbnailer
-    pkgs.gst_all_1.gst-libav
-    pkgs.gst_all_1.gst-plugins-base
-    pkgs.gst_all_1.gst-plugins-good
-    pkgs.xdg-user-dirs  # 使用 `xdg-user-dirs-update` 生成文件夹
-
-    # gnome applications
-    pkgs.gnome-control-center
-    pkgs.gnome-system-monitor
-    pkgs.baobab
-    pkgs.menulibre
-    pkgs.gnome-clocks
-    pkgs.gnome-calculator
-    pkgs.gnome-tweaks
-    pkgs.dconf-editor
-    pkgs.dconf2nix
-  ];
+  # environment.systemPackages = [];
 
   environment.gnome.excludePackages = [
     pkgs.gnome-backgrounds

@@ -1,25 +1,19 @@
-{ config, pkgs, inputs, lib, ... }:
+{ pkgs, inputs, ... }:
 
 {
-  imports = [
-    inputs.dankmaterialshell.nixosModules.default  # simple as flake.nix inputs
-  ];
-
   programs.dms-shell = {
     enable = true;
-    
-    # quickshell.package = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
-    
-    systemd.enable = false;
-
-    # enableSystemMonitoring = true;
-    # enableClipboard = true;
-    # enableDynamicTheming = true;
-    # enableAudioWavelength = true;
-    # enableVPN = true;
+    # quickshell.packages = pkgs.quickshell;
+    systemd.enable = true;
+    systemd.restartIfChanged = true;
+    enableClipboardPaste = true;  # required wtype
+    enableVPN = true;  # required glib networkmanager
+    enableDynamicTheming = true;  # required matugen
+    enableSystemMonitoring = true;  # required dgop
+    enableCalendarEvents = true;  # required khal
+    enableAudioWavelength = true;  # required cava
+    plugins = {  # see: 
+    };
   };
-
-  home.packages = [
-    inputs.dankmaterialshell.packages.${pkgs.stdenv.hostPlatform.system}.default
-  ];
+  # environment.systemPackages = with pkgs; [];
 }

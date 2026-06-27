@@ -32,7 +32,6 @@ layout {
     // You can change the default width of the new windows.
     default-column-width { proportion 0.5; }
     // If you leave the brackets empty, the windows themselves will decide their initial width.
-    // default-column-width { 0.3 0.5 0.8 1.0 }
 
     // By default focus ring and border are rendered as a solid background rectangle
     // behind windows. That is, they will show up through semitransparent windows.
@@ -41,6 +40,7 @@ layout {
     // If you don't like that, you should uncomment `prefer-no-csd` below.
     // Niri will draw focus ring and border *around* windows that agree to omit their
     // client-side decorations.
+    // prefer-no-csd true
     //
     // Alternatively, you can override it with a window rule called
     // `draw-border-with-background`.
@@ -153,6 +153,15 @@ layout {
         // bottom 64
     }
 }
+
+blur {
+    passes 3
+    offset 3
+    noise 0.02
+    saturation 1.5
+}
+
+prefer-no-csd true
 
 // Animation settings.
 // The wiki explains how to configure individual animations:

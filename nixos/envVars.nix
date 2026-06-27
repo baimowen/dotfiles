@@ -3,12 +3,13 @@
 {
   environment.variables = {
     # language
-    LANG = "en_US.UTF-8";
-    LANGUAGE = "en_US.UTF-8";
+    # LANG = "en_US.UTF-8";
+    # LANGUAGE = "en_US.UTF-8";
     LC_CTYPE = "zh_CN.UTF-8";
     LC_TIME = "zh_CN.UTF-8";
-    LC_MESSAGES = "en_US.UTF-8";
-    LC_COLLATE = "en_US.UTF-8";
+    # LC_MESSAGES = "en_US.UTF-8";
+    LC_MESSAGES = "zh_CN.UTF-8";
+    LC_COLLATE = "C";
     LC_NUMERIC = "en_US.UTF-8";
 
     # wayland fcitx
