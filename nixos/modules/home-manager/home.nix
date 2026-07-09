@@ -11,7 +11,7 @@
       "parsec-bin"
       "termius"
       "spotify"
-      "catppuccin"
+      "catppuccin"  # spicetify-nix.theme.catppuccin
       "osu-lazer-bin"
     ];
 

@@ -7,12 +7,13 @@
     # The file location can be passed with the -c parameter.
     # Othewise the `$XDG_CONFIG_HOME/wl-kbptr/config` file will
     # be loaded if it exits. Below is the default configuration.
-    
+    # h -> left | j -> right | b middle
+
     [general]
     home_row_keys=
     modes=tile,bisect
     cancellation_status_code=0
-    
+
     [mode_tile]
     label_color=#fffd
     label_select_color=#fd0d
@@ -22,7 +23,7 @@
     label_font_family=sans-serif
     label_font_size=8 50% 100
     label_symbols=abcdefghijklmnopqrstuvwxyz
-    
+
     [mode_floating]
     source=stdin
     label_color=#fffd
@@ -33,7 +34,7 @@
     label_font_family=sans-serif
     label_font_size=12 50% 100
     label_symbols=abcdefghijklmnopqrstuvwxyz
-    
+
     [mode_bisect]
     label_color=#fffd
     label_font_size=20
@@ -47,7 +48,7 @@
     odd_area_bg_color=#0034
     odd_area_border_color=#0048
     history_border_color=#3339
-    
+
     [mode_split]
     pointer_size=20
     pointer_color=#e22d
@@ -56,7 +57,7 @@
     vertical_color=#8888ffcc
     horizontal_color=#008800cc
     history_border_color=#3339
-    
+
     [mode_click]
     button=left
   '';

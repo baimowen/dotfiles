@@ -1,4 +1,4 @@
-{ inputs, currentSystem ... }:
+{ inputs, currentSystem, ... }:
 
 {
   # see: https://github.com/0xc000022070/zen-browser-flake#with-environmentsystempackages-or-homepackages

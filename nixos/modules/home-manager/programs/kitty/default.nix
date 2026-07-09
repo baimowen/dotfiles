@@ -7,7 +7,7 @@
     font.size = 18;
     font.name = "Maple Mono NF CN";
     # see:  https://github.com/kovidgoyal/kitty-themes/tree/master/themes
-    themeFile = "Catppuccin-Frappe";
+    # themeFile = "Catppuccin-Frappe";  # defined in ../../themes/catppuccin/default.nix
     # shellIntegration.enableBashIntegration = true;
     settings = {
       scrollback_lines = 10000;

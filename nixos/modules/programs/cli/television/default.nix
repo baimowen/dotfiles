@@ -9,7 +9,5 @@
   programs.television.enableBashIntegration = true;
 
   # 模糊搜索本地文件/目录依赖： fd bat
-  home.packages = with pkgs; [
-    fd bat
-  ];
+  # home.packages = with pkgs; [ fd bat ];
 }

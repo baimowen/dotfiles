@@ -6,7 +6,8 @@
     pkgs.nix-prefetch-git
     pkgs.tree
     pkgs.xz
-    pkgs.lf
+    pkgs.p7zip
+    pkgs.unzip
     pkgs.tldr  # Simplified and community-driven man pages
     pkgs.jq  # Lightweight and flexible command-line JSON processor
     pkgs.yq  # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
@@ -21,7 +22,9 @@
     pkgs.nmap
     pkgs.tcpdump
     pkgs.w3m
-    pkgs.ueberzugpp  # terminal image preview
+    pkgs.ueberzugpp  # terminal image viewer
+    pkgs.pdf-cli  # terminal pdf/epub viewer
+    # pkgs.   # terminal video viewer
 
     # de
     # pkgs.wl-kbptr  # see: https://github.com/moverest/wl-kbptr

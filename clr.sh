@@ -14,6 +14,7 @@ sudo journalctl --vacuum-time=1d
 sudo nix-env -p /nix/var/nix/profiles/system --delete-generations old
 nix-env --list-generations
 home-manager expire-generations 0
+# home-manager expire-generations 30d  # or "30 days ago"
 
 # clear nix store garbage
 sudo nix-collect-garbage -d

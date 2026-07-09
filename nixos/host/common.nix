@@ -78,7 +78,10 @@
     enable = true;
     wlr.enable = true;
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    config.common.default = lib.mkDefault [ "gtk" ];
+    config.common = {
+      default = [ "gtk" ];
+      "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
+    };
   };
 
   # authentication

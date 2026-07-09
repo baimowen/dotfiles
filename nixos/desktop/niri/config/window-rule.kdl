@@ -48,6 +48,16 @@ window-rule {
     }
     draw-border-with-background false
 }
+// overview
+// overview {
+//     zoom 0.5
+//     backdrop-color "#00000000"
+// }
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
+    // block-out-from "screen-capture"
+}
 /-layer-rule {
     // get namespace: niri msg layers / niri msg pick-window
     match namespace=""
@@ -64,4 +74,11 @@ window-rule {
     match app-id="localsend_app"  // get app-id: niri msg pick-window
     // match app-id=""
     open-floating true
+}
+// open in maximize-column mode
+/-window-rule {
+    match title="^Parsec$"
+    match app-id="org.qutebrowser.qutebrowser"
+    open-on-workspace="web"
+    default-column-width { proportion 1.0; }
 }

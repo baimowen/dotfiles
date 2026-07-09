@@ -57,7 +57,15 @@
   # users.users.nix = {
   users.users.${username} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" "incus-admin" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "libvirtd"
+      "video"
+      "audio"
+      "input"
+      # "incus-admin"
+    ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [];
     # generate hashedPassword: pass=$(openssl passwd -6 -salt SALT PASSWORD)
     # hashedPassword = "$6$YmFpbW93ZW4K$RnKOypvF69Te6spi5UCyHffAmG0XcyHQnoZTl8lgayKem6st74P9t/Y0kWD6bKRYJ7LS/AcVSSonPyxkJtxDE/";

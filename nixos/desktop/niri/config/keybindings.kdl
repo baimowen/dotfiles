@@ -19,6 +19,11 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "alacritty"; }
     Mod+E hotkey-overlay-title="Open a FileManager: nautilus" { spawn "nautilus"; }
     Mod+R hotkey-overlay-title="Run an Application: vicinae" { spawn "vicinae" "open"; }
+    Mod+G hotkey-overlay-title="Open Grid: wl-kbptr" { spawn "wl-kbptr"; }
+    // Mod+M hotkey-overlay-title="Click the mouse: wlrctl" { spawn "wlrctl" "pointer" "click" "left"; }
+    // `Mod+;` `Mod+'`
+    Mod+Semicolon hotkey-overlay-title="Click the mouse legt: wlrctl" { spawn "wlrctl" "pointer" "click" "left"; }
+    Mod+Apostrophe hotkey-overlay-title="Click the mouse right: wlrctl" { spawn "wlrctl" "pointer" "click" "right"; }
     // Super+Alt+L hotkey-overlay-title="show power menu: wayland-logout" { spawn "wayland-logout"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.

@@ -19,6 +19,7 @@
     };
     nix-search-tv.url = "github:3timeslazy/nix-search-tv";
     nix-sweep.url = "github:jzbor/nix-sweep";
+    catppuccin.url = "github:catppuccin/nix";
     # zen-browser.url = "github:github:0xc000022070/zen-browser-flake/8ce7d926dbec820ab5686d599bc6a1bd19ed1273";
     zen-browser.url = "github:0xc000022070/zen-browser-flake?rev=8ce7d926dbec820ab5686d599bc6a1bd19ed1273";
     # npc = {
@@ -53,6 +54,7 @@
     sops-nix,
     nix-search-tv,
     nix-sweep,
+    catppuccin,
     zen-browser,
     # npc,
     quickshell,
@@ -82,6 +84,9 @@
           ./modules/programs/cli/git
           ./modules/programs/cli/tmux
 
+          # themes
+          ./modules/home-manager/themes/catppuccin
+
           # cli applications
           ./modules/programs/cli/fzf
           ./modules/programs/cli/television
@@ -106,6 +111,8 @@
           # ./modules/home-manager/programs/mako
           ./modules/home-manager/programs/mpd
           ./modules/home-manager/programs/mpv
+          ./modules/home-manager/programs/bat
+          ./modules/home-manager/programs/btop
           ./modules/home-manager/programs/playerctl
           ./modules/home-manager/programs/neomutt
           # ./modules/home-manager/programs/waybar
@@ -142,6 +149,9 @@
       #   inherit pkgs inputs username hostname;
       # })
 
+      # themes
+      ./modules/programs/themes/catppuccin
+
       # modules:
       ./modules/programs/cli/sops-nix
       ./modules/programs/cli/devenv
@@ -159,6 +169,7 @@
 
       # virtualization:
       ./modules/services/virtual/containerd
+      ./modules/services/virtual/podman
       ./modules/services/virtual/virt
       # ./modules/services/virtual/incus
       # ./modules/services/virtual/docker  # if you want to use Docker, you need to replace nftables with iptables and comment the incus imports.
@@ -166,7 +177,7 @@
 
       # databases:
       ./modules/services/databases/postgresql
-      ./modules/services/databases/postgresql/pgadmin
+      # ./modules/services/databases/postgresql/pgadmin
 
       # log
       ./modules/services/ELK/logstash.nix
