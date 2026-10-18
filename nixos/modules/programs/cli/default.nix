@@ -4,7 +4,16 @@
   environment.systemPackages = [
     pkgs.nix-index  # search on nixpkgs which command in packages (nix-locate bin/command)
     pkgs.nix-prefetch-git
+    pkgs.gnugrep
+    pkgs.gnused
+    pkgs.gawk
+    pkgs.strace
+    pkgs.sysstat
+    pkgs.iotop
+    pkgs.lsof
     pkgs.tree
+    pkgs.file
+    pkgs.lsof
     pkgs.xz
     pkgs.p7zip
     pkgs.unzip
@@ -19,12 +28,12 @@
     pkgs.rsync  # Fast incremental file transfer utility
     # pkgs.rsyncy  # Progress bar wrapper for rsync
     pkgs.hexdump
+    pkgs.pv  # pipe viewer
     pkgs.nmap
     pkgs.tcpdump
     pkgs.w3m
     pkgs.ueberzugpp  # terminal image viewer
     pkgs.pdf-cli  # terminal pdf/epub viewer
-    # pkgs.   # terminal video viewer
 
     # de
     # pkgs.wl-kbptr  # see: https://github.com/moverest/wl-kbptr
@@ -34,6 +43,7 @@
     pkgs.wlr-randr
     pkgs.wlrctl  # move pointer
     pkgs.pavucontrol
+    pkgs.brightnessctl
     pkgs.wf-recorder
     pkgs.wl-clipboard
     pkgs.clipse

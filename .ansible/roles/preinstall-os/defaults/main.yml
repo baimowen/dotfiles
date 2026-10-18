@@ -9,5 +9,3 @@ btrfs_mount_opts: "compress=zstd:3,noatime,ssd,space_cache=v2"
 btrfs_subvols:
   - "@"
   - "@home"
-  - "@nix"
-  - "@tmp"

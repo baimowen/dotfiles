@@ -13,3 +13,4 @@ nixos/modules/programs/cli/sops-nix/age_baimowen_secret.key
 nixos/modules/home-manager/hm-switch.nix
 proxy.sh
 cachix.md
+nixos/modules/programs/cli/sops-nix/secrets/github_access_token.yaml

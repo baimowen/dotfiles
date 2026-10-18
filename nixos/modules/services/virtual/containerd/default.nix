@@ -17,6 +17,16 @@
         registry.mirrors = {
           "docker.io".endpoint = [
             "https://mirror.docker.nju.edu.cn"
+            "https://docker.m.daocloud.io"
+          ];
+          "gcr.io".endpoint = [
+            "https://gcr.m.daocloud.io"
+          ];
+          "ghcr.io".endpoint = [
+            "https://ghcr.m.daocloud.io"
+          ];
+          "registry.k8s.io".endpoint = [
+            "https://k8s.m.daocloud.io"
           ];
         };
       };

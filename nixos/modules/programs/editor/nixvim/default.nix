@@ -9,11 +9,11 @@
     ./plugins/LSP/mason.nvim.nix
     ./plugins/LSP/nvim-lspconfig.nix
     ./plugins/LSP/blink.cmp.nix
-    ./plugins/ui/lualine.nvim.nix
-    ./plugins/ui/barbar.nvim.nix
+    # ./plugins/ui/lualine.nvim.nix
+    # ./plugins/ui/barbar.nvim.nix
     ./plugins/ui/nvim-tree.nix
     ./plugins/ui/web-devicons.nix
-    ./plugins/ui/noice.nvim.nix
+    # ./plugins/ui/noice.nvim.nix
     ./plugins/utils/nvim-autopairs.nix
     ./plugins/utils/rainbow-delimiters.nvim.nix
     ./plugins/utils/gitsigns.nvim.nix

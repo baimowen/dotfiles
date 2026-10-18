@@ -29,12 +29,11 @@
         ls = "LC_COLLATE=C LC_CTYPE=en_US.UTF-8 ls -alh --group-directories-first --sort=name --color=auto";
         grep = "grep -iE --color=auto";
         # cat = "bat";
-        v = "nvim";
-        c = "clear";
         his = "history";
-        df = "df -h";
-        du = "du -h";
+        # df = "df -h";
+        # du = "du -h";
         free = "free -h";
+        sd = "shutdown";
 
         # >>> git >>>
         # lg = "lazygit";
@@ -85,6 +84,9 @@
         # ncg = "sudo nix-collect-garbage -d";
         ns = "nix-search-tv print | fzf --preview 'nix-search-tv preview {}' --scheme history";
         # <<< nixos <<<
+
+        ffmpeg = "ffmpeg -hide_banner -loglevel error -stats";
+        ffprobe = "ffprobe -hide_banner -loglevel error -stats";
     };
 
     # keybindings

@@ -13,6 +13,8 @@
       "spotify"
       "catppuccin"  # spicetify-nix.theme.catppuccin
       "osu-lazer-bin"
+      "wechat"
+      "bilibili"
     ];
 
   # nix run home-manager/master -- init
@@ -69,6 +71,20 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
+
+  # xdg.configFile = {
+    # # This will create a symlink from '~/.config/nvim/init.vim' to the Nix store
+    # # copy of 'dotfiles/nvim/init.vim'.
+    # "nvim/init.vim".source = dotfiles/nvim/init.vim;
+    # # You can also set the file content immediately.
+    # "nvim/ftplugin/python.vim".text = ''
+    #   setlocal expandtab shiftwidth=4 softtabstop=4
+    # '';
+    # # or use `mkOutOfStoreSymlink` to create a symlink to a file outside the Nix store.
+    # "nvim/init.vim".source = config.lib.file.mkOutOfStoreSymlink "/path/to/init.vim";  # absolute path
+  # };
+
+ 
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

@@ -19,6 +19,9 @@
         branch = true;
         showStash = true;
       };
+      core = {
+        quotepath = false;
+      };
       color = {
         ui = "auto";
       };

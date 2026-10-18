@@ -6,3 +6,9 @@ set keymap vi-insert
 
 # 保持normal模式下vim快捷键不变
 set keymap vi-command
+
+# # edit-and-execute-command: \C-x\C-e is coded in emacs mode
+# set editing-mode vi
+# $if mode=vi
+# "\C-x\C-e": edit-and-execute-command
+# $endif

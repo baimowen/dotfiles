@@ -19,7 +19,22 @@
     extraPackages = with pkgs; [ gamescope ];
     gamescopeSession.enable = true;
   };
-  environment.systemPackages = with pkgs; [ lutris wine wine-wayland ];
+  environment.systemPackages = with pkgs; [
+    # wine
+    wine-wayland
+    wineWow64Packages.full
+    lutris
+
+    # game runtime
+    gamemode
+    mangohud
+    vulkan-tools
+    vulkan-loader
+
+    # graphics render
+    dxvk
+    vkd3d
+  ];
   # nixpkgs.config.allowUnfreePredicate = pkg:
   #   builtins.elem (lib.getName pkg) [
   #     "steam-unwrapped"

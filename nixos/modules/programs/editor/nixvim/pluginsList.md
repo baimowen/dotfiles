@@ -109,11 +109,11 @@
 
   * [lualine.nvim ](https://github.com/nvim-lualine/lualine.nvim)
 
-    nvim 底部状态栏：用于展示 nvim 信息如mode、encode、platform、language等
+    nvim 底部状态栏：用于展示 nvim 信息如mode、encode、platform、language等，保持插件最少原则，未安装
 
   * [barbar.nvim ](https://github.com/romgrk/barbar.nvim)
 
-    nvim 顶部标签栏：用于切换打开的文件
+    nvim 顶部标签栏：用于切换打开的文件，保持插件最少原则，未安装
 
   * [rainbow-delimiters.nvim ](https://github.com/hiphish/rainbow-delimiters.nvim)
 
@@ -121,7 +121,7 @@
 
   * [noice.nvim ](https://github.com/folke/noice.nvim)
 
-    更好的弹出菜单和消息提示
+    更好的弹出菜单和消息提示，保持插件最少原则，未安装
 
   * [nvim-tree ](https://github.com/nvim-tree/nvim-tree.lua)
 

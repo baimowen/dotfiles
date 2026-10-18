@@ -47,4 +47,5 @@ in
   };
   # openssl passwd -salt $(echo postgres|base64) -6 postgres
   users.users.postgres.hashedPassword = "$6$cG9zdGdyZXMK$qIUIuWbWM6M1DSpc3S4Y0O.cDv.xK21Igr8523qaiBSJFmCaJhnE9/RRldy17BIAnAtyzc.Y.LNj3Ox9GXj.Q1";
+  environment.systemPackages = with pkgs; [ pgcli ];
 }

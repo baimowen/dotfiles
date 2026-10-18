@@ -11,7 +11,6 @@
       - /mnt/boot/efi
       - /mnt/home
       - /mnt/nix
-      - /mnt/tmp
 
   - name: mount btrfs to create subvol
     ansible.builtin.mount:
@@ -49,22 +48,6 @@
       src: "{{ disk }}p3"
       fstype: btrfs
       opts: "subvol=@home,{{ btrfs_mount_opts }}"
-      state: ephemeral
-
-  - name: mount nix subvol
-    ansible.builtin.mount:
-      path: /mnt/nix
-      src: "{{ disk }}p3"
-      fstype: btrfs
-      opts: "subvol=@nix,{{ btrfs_mount_opts }}"
-      state: ephemeral
-
-  - name: mount tmp subvol
-    ansible.builtin.mount:
-      path: /mnt/tmp
-      src: "{{ disk }}p3"
-      fstype: btrfs
-      opts: "subvol=@tmp,{{ btrfs_mount_opts }}"
       state: ephemeral
 
   - name: mount efi
