@@ -14,6 +14,10 @@
         "nix-command" "flakes"
         # "pipe-operators"
       ];
+      # max-jobs = 1;  # Only build 1 derivation at a time
+      # cores = 0;  # use full cores
+      # update: sops modules/programs/cli/sops/secrets/github_access_token.yaml
+      # expiration date: 2026-11-20+0800
       access-tokens = config.sops.secrets.github_access_token.path;
     };
   };

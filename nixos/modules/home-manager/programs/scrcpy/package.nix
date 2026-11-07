@@ -72,7 +72,7 @@ stdenv.mkDerivation (finalAttrs: {
     '';
     homepage = "https://github.com/viarotel-org/escrcpy";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ baimowen ];
+    maintainers = "";
     platforms = lib.platforms.linux;
     mainProgram = "escrcpy";
   };

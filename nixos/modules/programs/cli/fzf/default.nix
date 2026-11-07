@@ -10,7 +10,7 @@
       "--ansi"
       "--multi"
     ];
-    fileWidgetOptions = [ ];
-    changeDirWidgetOptions = [ ];
+    # changeDirWidget.options = [ ];
+    # fileWidget.options = [ ];
   };
 }

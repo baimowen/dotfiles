@@ -5,26 +5,33 @@
     pkgs.nix-index  # search on nixpkgs which command in packages (nix-locate bin/command)
     pkgs.nix-prefetch-git
     pkgs.gnugrep
+    pkgs.grex
     pkgs.gnused
     pkgs.gawk
     pkgs.strace
     pkgs.sysstat
     pkgs.iotop
     pkgs.lsof
+    pkgs.psmisc  # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
     pkgs.tree
     pkgs.file
     pkgs.lsof
     pkgs.xz
     pkgs.p7zip
     pkgs.unzip
-    pkgs.tldr  # Simplified and community-driven man pages
-    pkgs.jq  # Lightweight and flexible command-line JSON processor
-    pkgs.yq  # Command-line YAML/XML/TOML processor - jq wrapper for YAML, XML, TOML documents
-    pkgs.dos2unix  # Convert text files with DOS or Mac line breaks to Unix line breaks and vice versa
+    pkgs.tldr
+    pkgs.jq
+    pkgs.yq
+    pkgs.njq  # Command-line JSON processor using nix as query language
+    pkgs.dos2unix
+    pkgs.expect  # Tool for automating interactive applications
+    pkgs.gh
+    # pkgs.act  # or use `gh extension install https://github.com/nektos/gh-act`
+    pkgs.dive  # A tool for exploring a Docker image, layer contents, and discovering ways to shrink the size of your Docker/OCI image.
     # pkgs.hyperfine  # Command-line benchmarking tool
     pkgs.nitch  # Incredibly fast system fetch written in nim
-    pkgs.duf  # Disk Usage/Free Utility - a better 'df' alternative
-    pkgs.ncdu  # Disk usage analyzer with an ncurses interface
+    pkgs.duf
+    pkgs.ncdu
     pkgs.rsync  # Fast incremental file transfer utility
     # pkgs.rsyncy  # Progress bar wrapper for rsync
     pkgs.hexdump

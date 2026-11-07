@@ -1,0 +1,31 @@
+[[connection]]
+name     = 'newConn'
+driver   = 'postgres'
+host     = 'localhost'
+port     = 5432
+user     = 'postgres'
+database = 'postgres'
+env      = 'dev'
+params   = { sslmode = "disable" }
+
+# an intranet cluster without security
+[[connection]]
+name   = "es-dev"
+driver = "elasticsearch"
+host   = "172.16.96.161"
+
+# Docker's ES 8.x: HTTPS and the elastic user (the password is asked for and kept in the keychain)
+[[connection]]
+name   = "es-local"
+driver = "elasticsearch"
+host   = "localhost"
+user   = "elastic"
+params = { tls = "true", tls_ca = "/path/to/http_ca.crt" }
+
+# an API key instead of a password (asked for once, kept as <connection>#apikey)
+[[connection]]
+name   = "es-prod"
+driver = "elasticsearch"
+host   = "https://es-1.internal:9243,https://es-2.internal:9243"
+env    = "prod"
+params = { auth = "apikey" }

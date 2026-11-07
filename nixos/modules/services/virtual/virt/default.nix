@@ -66,4 +66,5 @@
     # custom shared directories
     "d /home/nix/shared/iso 0755 qemu-libvirtd kvm -"  # ensure username is nix
   ];
+  virtualisation.waydroid.enable = true;
 }

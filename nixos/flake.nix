@@ -10,7 +10,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
     devenv.url = "github:cachix/devenv";
     sops-nix = {
@@ -40,7 +40,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     swww.url = "github:LGFae/swww";
-    vicinae.url = "github:vicinaehq/vicinae";
+    vicinae.url = "github:vicinaehq/vicinae?rev=e680237b019d13dcd600bd414ced00e28ac14809";
+    bookokrat.url = "github:bugzmanov/bookokrat";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
 
@@ -62,6 +63,7 @@
     dankMaterialShell,
     swww,
     vicinae,
+    bookokrat,
     spicetify-nix,
     ...
   } @ inputs: let
@@ -122,6 +124,7 @@
           ./modules/home-manager/programs/kdeconnect
           # ./modules/home-manager/programs/scrcpy
           ./modules/home-manager/programs/onlyoffice
+          ./modules/home-manager/programs/bookokrat
           ./modules/home-manager/programs/spicetify-nix
           ./modules/home-manager/programs/cava
           ./modules/home-manager/programs
@@ -178,6 +181,8 @@
       # databases:
       ./modules/services/databases/postgresql
       # ./modules/services/databases/postgresql/pgadmin
+      # ./modules/programs/cli/sqlmux
+      ./modules/programs/cli/datavim
 
       # log
       ./modules/services/ELK/logstash.nix
@@ -200,7 +205,7 @@
 
     mkSystem = system: nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { currenSystem = system; inherit self inputs; };
+      specialArgs = { currentSystem = system; inherit self inputs; };
       modules = mkModules system;
     };
 

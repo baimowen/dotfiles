@@ -5,11 +5,12 @@
     # uitls
     pkgs.perl
     pkgs.fd
+    pkgs.shc
     pkgs.bat
     pkgs.unzip
     pkgs.yt-dlp
-    pkgs.gh
-    # pkgs.act  # or use `gh extension install https://github.com/nektos/gh-act`
+    # pkgs.visidata  # A terminal interface for exploring and arranging tabular data.
+    pkgs.gitlogue
     pkgs.imv
     pkgs.scrcpy
     pkgs.cpufetch
