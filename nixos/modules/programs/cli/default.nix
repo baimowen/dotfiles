@@ -39,6 +39,7 @@
     pkgs.nmap
     pkgs.tcpdump
     pkgs.w3m
+    pkgs.obscura  # Headless browser for AI agents and web scraping
     pkgs.ueberzugpp  # terminal image viewer
     pkgs.pdf-cli  # terminal pdf/epub viewer
 

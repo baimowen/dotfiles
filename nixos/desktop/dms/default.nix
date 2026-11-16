@@ -6,6 +6,7 @@
     # quickshell.packages = pkgs.quickshell;
     systemd.enable = true;
     systemd.restartIfChanged = true;
+    # system.target = "niri.service";
     enableClipboardPaste = true;  # required wtype
     enableVPN = true;  # required glib networkmanager
     enableDynamicTheming = true;  # required matugen

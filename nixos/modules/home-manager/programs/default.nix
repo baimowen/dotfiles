@@ -22,7 +22,8 @@
     pkgs.openlist
     pkgs.termius
     pkgs.winboat  # depended on podman/docker
-    pkgs.kdePackages.okular  # pdf reader
+    pkgs.papers  # GNOME's document viewer
+    pkgs.kdePackages.okular  # KDE document viewer
     pkgs.kdePackages.kdenlive
     pkgs.audacity
     pkgs.gimp

@@ -29,7 +29,7 @@
     # --- sops-nix age integration options ---
     age.sshKeyPaths = [];
     # age.keyFile = "/home/nix/.age/keys.txt";
-    age.keyFile = "/home/${username}/.age/keys.txt";
+    age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
     # --- sops-nix age integration options ---
 
     # go install, need proxy
@@ -60,6 +60,25 @@
         owner = "nix";
         group = "users";
         mode = "0600";
+      };
+      "restic_htpasswd" = {
+        sopsFile = ./secrets/restic_htpasswd.yaml;
+        # apache htpasswd format: username:passhash,
+        # and when extracted through sops it becomes `key: value`, with value being "username:passhash"
+        # Use the following command to generate a password file
+        # nix shell nixpkgs#apacheHttpd
+        # printf 'restic_htpasswd: "%s"\n' "$(htpasswd -nbB restic 'restic_htpasswd' | tr -d '\n')" > modules/programs/cli/sops/secrets/restic_htpasswd.yaml
+        key = "restic_htpasswd";
+        owner = "restic";
+        group = "restic";
+        mode = "0400";
+      };
+      "restic_backup_passwd" = {
+        sopsFile = ./secrets/restic_htpasswd.yaml;
+        key = "restic_backup_passwd";  # accept a custom plain text
+        owner = "restic";
+        group = "restic";
+        mode = "0400";
       };
       "psql_password" = {
         sopsFile = ./secrets/psql_password.yaml;

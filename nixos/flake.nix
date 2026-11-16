@@ -70,12 +70,15 @@
 
     # when hm is installed as a standalone:
     mkHomeModules = system: let
-      pkgs = nixpkgs.legacyPackages.${system};
+      # pkgs = nixpkgs.legacyPackages.${system};
       # or, if you want to use overlays in hm:
-      # pkgs = import nixpkgs {
-      #   inherit system;
-      #   overlays = [ (import ./overlays) ];  # expose overlays only to hm
-      # };
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          # (import ./overlays)
+          (import ./modules/home-manager/programs/bookokrat/bookokrat-overlay.nix { inherit inputs; })
+        ];  # expose overlays only to hm
+      };
     in
       home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -125,6 +128,7 @@
           # ./modules/home-manager/programs/scrcpy
           ./modules/home-manager/programs/onlyoffice
           ./modules/home-manager/programs/bookokrat
+          # ./modules/home-manager/programs/foliate
           ./modules/home-manager/programs/spicetify-nix
           ./modules/home-manager/programs/cava
           ./modules/home-manager/programs
@@ -159,6 +163,7 @@
       ./modules/programs/cli/sops-nix
       ./modules/programs/cli/devenv
       ./modules/programs/cli/direnv
+      # ./modules/programs/cli/nix-ld  # run unpatched dynamic binaries on nixos
       # ./modules/programs/cli/cachix
       ./modules/programs/cli/nix-sweep
 
