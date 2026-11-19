@@ -35,11 +35,22 @@
     ./hardware-configuration.nix
   ];
 
+  # microcode
+  hardware.cpu.amd.updateMicrocode = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.kernelPackages = pkgs.linuxPackages_latest;  # use latest kernel, to prevent the copyfail
+  boot.kernelParams = [
+    "amd_pstate=active"
+    "mem_sleep_default=deep"
+  ];
+  boot.kernel.sysctl = {
+    "vm.dirty_writeback_centisecs" = 6000;
+    "vm.dirty_expire_centisecs" = 12000;
+  };
 
   # networking.hostName = "nixos"; # Define your hostname.
   networking.hostName = hostname;

@@ -55,6 +55,9 @@
     spice-gtk       # SPICE client GTK
     spice-protocol  # SPICE protocol headers
     virglrenderer   # Virtual GPU support
+    # waydroid        # Container-based approach to boot a full Android system on a regular GNU/Linux system
+    # waydroid-nftables # Container-based approach to boot a full Android system on a regular GNU/Linux system
+    # waydroid-helper # User-friendly way to configure Waydroid and install extensions, including Magisk and ARM translation
   ];
 
   # Create shared directories

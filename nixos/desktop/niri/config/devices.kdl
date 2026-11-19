@@ -125,6 +125,6 @@ output "eDP-1" {
 
 cursor {
     // xcursor-theme "Breeze_cursors"
-    xcursor-size 50
+    xcursor-size 30
     hide-after-inactive-ms 15000
 }

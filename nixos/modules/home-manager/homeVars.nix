@@ -2,11 +2,6 @@
 
 {
   home.sessionVariables = {
-    # cursor style
-    XCURSOR_SIZE = "24";
-    # XCURSOR_THEME = "Bibata-Modern-Ice";
-    # HYPRCURSOR_SIZE = "24";
-
     # wayland
     # XDG_SESSION_TYPE = "wayland";
     # GDK_BACKEND = "wayland,x11";  # gtk application backend

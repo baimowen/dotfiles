@@ -22,11 +22,11 @@
     catppuccin.url = "github:catppuccin/nix";
     # zen-browser.url = "github:github:0xc000022070/zen-browser-flake/8ce7d926dbec820ab5686d599bc6a1bd19ed1273";
     zen-browser.url = "github:0xc000022070/zen-browser-flake?rev=8ce7d926dbec820ab5686d599bc6a1bd19ed1273";
-    # npc = {
-    #   # A CLI tool to access the history of Nixpkgs channels.
-    #   url = "github:samestep/npc";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    npc = {
+      # A CLI tool to access the history of Nixpkgs channels.
+      url = "github:samestep/npc";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     quickshell = {
       url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,8 +35,9 @@
     #   url = "github:caelestia-dots/shell";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
-    dankMaterialShell = {
-      url = "github:AvengeMedia/DankMaterialShell";
+    dms = {
+      # url = "github:AvengeMedia/DankMaterialShell";
+      url = "github:duxlabs-dev/dux-shell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     swww.url = "github:LGFae/swww";
@@ -57,10 +58,10 @@
     nix-sweep,
     catppuccin,
     zen-browser,
-    # npc,
+    npc,
     quickshell,
     # caelestia-shell,
-    dankMaterialShell,
+    dms,
     swww,
     vicinae,
     bookokrat,
@@ -74,10 +75,11 @@
       # or, if you want to use overlays in hm:
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [
-          # (import ./overlays)
-          (import ./modules/home-manager/programs/bookokrat/bookokrat-overlay.nix { inherit inputs; })
-        ];  # expose overlays only to hm
+        overlays = mkOverlays;
+        # overlays = [
+        #   # (import ./overlays)
+        #   (import ./modules/home-manager/programs/bookokrat/bookokrat-overlay.nix { inherit inputs; })
+        # ];  # expose overlays only to hm
       };
     in
       home-manager.lib.homeManagerConfiguration {
@@ -107,12 +109,13 @@
           ./modules/home-manager/programs/nm-applet     
           ./modules/home-manager/programs/blueman-applet
           ./modules/home-manager/programs/hyprpolkitagent
-          ./modules/home-manager/programs/hypridle
+          # ./modules/home-manager/programs/hypridle  # do not work on niri
+          # ./modules/home-manager/programs/swayidle
           # ./modules/home-manager/programs/hyprlock
-          ./modules/home-manager/programs/hyprlauncher  
+          # ./modules/home-manager/programs/hyprlauncher  
           ./modules/home-manager/programs/vicinae
           ./modules/home-manager/programs/swww
-          ./modules/home-manager/programs/swaync
+          # ./modules/home-manager/programs/swaync  # or dunst 
           # ./modules/home-manager/programs/mako
           ./modules/home-manager/programs/mpd
           ./modules/home-manager/programs/mpv
@@ -125,7 +128,7 @@
           ./modules/home-manager/programs/translate-shell
           ./modules/home-manager/programs/obs-studio
           ./modules/home-manager/programs/kdeconnect
-          # ./modules/home-manager/programs/scrcpy
+          ./modules/home-manager/programs/scrcpy
           ./modules/home-manager/programs/onlyoffice
           ./modules/home-manager/programs/bookokrat
           # ./modules/home-manager/programs/foliate
@@ -163,13 +166,14 @@
       ./modules/programs/cli/sops-nix
       ./modules/programs/cli/devenv
       ./modules/programs/cli/direnv
-      # ./modules/programs/cli/nix-ld  # run unpatched dynamic binaries on nixos
+      ./modules/programs/cli/nix-ld  # run unpatched dynamic binaries on nixos
       # ./modules/programs/cli/cachix
       ./modules/programs/cli/nix-sweep
+      ./modules/programs/cli/restic
 
       # editors:
       ./modules/programs/editor/vim
-      # ./modules/programs/editor/nixvim
+      ./modules/programs/editor/nixvim
       ./modules/programs/editor/vscode
 
       # automation:
@@ -200,18 +204,27 @@
 
       ./envVars.nix
       ./desktop/gnome
-      ./desktop/niri
-      ./desktop/dms
-      # ./modules/programs/browser/zen
+      ./desktop/niri/niri-system.nix
+      # ./desktop/dms
+      ./modules/programs/browser/zen
       ./modules/programs/proxy
       ./modules/programs/steam
       ./modules/programs/gui/localsend
     ];
 
+    mkOverlays = [
+      (import ./modules/home-manager/programs/bookokrat/bookokrat-overlay.nix { inherit inputs; })
+      (import ./modules/programs/cli/fcitx5-wetypex/fcitx5-wetypex-overlay.nix { inherit inputs; })
+    ];
+
     mkSystem = system: nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = { currentSystem = system; inherit self inputs; };
-      modules = mkModules system;
+      modules = [
+        ({ ... }: {
+          nixpkgs.overlays = mkOverlays;
+        })
+      ] ++ mkModules system;
     };
 
   in

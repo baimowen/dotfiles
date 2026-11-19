@@ -1,8 +1,8 @@
 # standard overlay function
-{ inputs }:
+{ inputs, ... }:
 
 final: prev: {
-  bookokrat = inputs.bookokrat.packages.${prev.system}.default.overrideAttrs (old: {
+  bookokrat = inputs.bookokrat.packages.${final.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
     doCheck = false;
   });
 }

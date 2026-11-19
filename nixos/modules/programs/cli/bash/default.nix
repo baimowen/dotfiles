@@ -14,11 +14,16 @@
         # set -o vi
         set -o emacs
         # export EDITOR=vim  # set default editor to vim
-        # export PS1='[\[\e[32m\]\h\[\e[0m\]]─[\[\e[34m\]\u\[\e[0m\]]─[\[\e[33m\]\w\[\e[0m\]]\n└──> '
+        # right_time() {
+        #   printf "%*s" "$(tput cols)" "$(date +%H:%M:%S)"
+        # }
+        # export PS1='\[$(tput sc; right_time; tput rc)\][\u@\h]  \w\012\$ '
         #################
         # `^[v` to enter command buffer editor, which is vim by default
         # `bind '"\C-x\C-e": edit-and-execute-command'` ^x^e to enter command buffer editor(set -o emacs first if you want to use emacs keybindings)
         #################
+        eval "$(fzf --bash)"
+        eval "$(gh completion -s bash)"
       fi
     '';  # run script everytime when bash init
 

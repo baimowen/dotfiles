@@ -35,44 +35,61 @@
     pkgs.rsync  # Fast incremental file transfer utility
     # pkgs.rsyncy  # Progress bar wrapper for rsync
     pkgs.hexdump
+    pkgs.ffmpeg
     pkgs.pv  # pipe viewer
     pkgs.nmap
     pkgs.tcpdump
     pkgs.w3m
     pkgs.obscura  # Headless browser for AI agents and web scraping
     pkgs.ueberzugpp  # terminal image viewer
+    # pkgs.wl-kbptr  # see: https://github.com/moverest/wl-kbptr
+    pkgs.wlrctl  # move pointer
     pkgs.pdf-cli  # terminal pdf/epub viewer
+    pkgs.xdg-user-dirs  # use `xdg-user-dirs-update` to generate user directories like `~/Desktop`, `~/Documents`, etc.
 
     # de
-    # pkgs.wl-kbptr  # see: https://github.com/moverest/wl-kbptr
+    # enable programs based on qt5/qt6 to 
+    # run in native wayland mode
     pkgs.qt5.qtwayland
     pkgs.qt6.qtwayland
-    pkgs.xwayland-satellite  # xwayland 兼容层
-    pkgs.wlr-randr
-    pkgs.wlrctl  # move pointer
-    pkgs.pavucontrol
-    pkgs.brightnessctl
-    pkgs.wf-recorder
-    pkgs.wl-clipboard
-    pkgs.clipse
-    pkgs.grim
-    pkgs.slurp
-    pkgs.gradia
-    pkgs.swaybg
-    # pkgs.awww
-    pkgs.waypaper
-    pkgs.lxappearance
-    pkgs.ffmpeg
+    pkgs.xwayland-satellite  # xwayland compatibility layer
+
+    # controller
+    pkgs.wlr-randr  # a display output management tool for wayland, used to adjust resolution, scaling, and screen orientation
+    pkgs.pavucontrol  # pulseaudio volume control
+    pkgs.brightnessctl  # brightness control
+
+    # clipboard
+    pkgs.wl-clipboard  # command-line copy/paste utilities for wayland
+    pkgs.clipse  # clipboard manager(tui)
+
+    # screenshot / screen recorder
+    pkgs.grim  # screenshot utility for wayland
+    pkgs.slurp  # select a region in a wayland compositor
+    pkgs.gradia  # screenshot editor and annotator for wayland
+    pkgs.wf-recorder  # recorder for wayland
+
+    # background manager
+    pkgs.waypaper  # wallpaper manager frontend
+    pkgs.swaybg  # static wallpaper tool
+    pkgs.awww  # dynamic wallpaper daemon
+    pkgs.lxappearance  # gtk theme switcher
+    pkgs.nwg-look
+
+    # file manager
     pkgs.nautilus
     pkgs.nautilus-python
     pkgs.nautilus-open-any-terminal  # need to `ln -s /usr/bin/kitty /use/bin/gnoe-terminal
-    pkgs.poppler
-    pkgs.tumbler
-    pkgs.ffmpegthumbnailer
+    # thumbnailer
+    pkgs.tumbler  # thunmbnailer core backend
+    pkgs.ffmpegthumbnailer  # video thumbnailer lib
+    pkgs.poppler  # pdf thumbnailer lib
+    # thumbnailer dependencies lib
     pkgs.gst_all_1.gst-libav
     pkgs.gst_all_1.gst-plugins-base
     pkgs.gst_all_1.gst-plugins-good
-    pkgs.xdg-user-dirs  # 使用 `xdg-user-dirs-update` 生成文件夹
+
+    # pkgs.wmenu  # dmenu on wayland
     pkgs.wayland-logout
 
     # gnome applications
@@ -85,11 +102,5 @@
     pkgs.gnome-tweaks
     pkgs.dconf-editor
     pkgs.dconf2nix
-
-    # dms depencies
-    pkgs.wtype
-    pkgs.matugen
-    pkgs.dgop
-    pkgs.khal
   ];
 }

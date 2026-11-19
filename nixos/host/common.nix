@@ -19,15 +19,35 @@
       enable = true;
       type = "fcitx5";
       fcitx5.waylandFrontend = true;
+      fcitx5.settings.globalOptions = {
+        Hotkey = {
+          EnumerateWithTriggerKeys = true;
+          EnumerateSkipFirst = false;
+        };
+        "Hotkey/TriggerKeys" = {
+          "0" = "Control+space";
+        };
+      };
       fcitx5.addons = with pkgs; [
         fcitx5-gtk
         qt6Packages.fcitx5-qt
         kdePackages.fcitx5-configtool
-        kdePackages.fcitx5-chinese-addons
+        # kdePackages.fcitx5-chinese-addons
         # kdePackages.fcitx5-with-addons
-        fcitx5-rime
-        rime-ice
+        fcitx5-wetypex
+        # fcitx5-rime
+        # rime-ice
       ];
+      fcitx5.settings.inputMethod = {
+        GroupOrder."0" = "Default";
+        "Groups/0" = {
+          Name = "Default";
+          "Default Layout" = "us";
+          DefaultIM = "keyboard-us";
+        };
+        "Groups/0/Items/0".Name = "keyboard-us";
+        "Groups/0/Items/1".Name = "wetypex";
+      };
     };
   };
 
@@ -64,11 +84,15 @@
   # power supply
   services.upower.enable = true;
   services.power-profiles-daemon.enable = true;
+
+  # zram
+  zramSwap.enable = true;
+  zramSwap.memoryPercent = 50;
   
   # notice service
-  services.dunst.enable = true;
-  services.dunst.enableWayland = true;
-  services.dbus.enable = true;
+  # services.dunst.enable = true;
+  # services.dunst.enableWayland = true;
+  # services.dbus.enable = true;
   # environment.systemPackages = with pkgs; [ libnotify ];
 
   # Enable CUPS to print documents.
@@ -77,9 +101,11 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
+    # https://wiki.archlinux.org/title/XDG_Desktop_Portal
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    config.common = {
-      default = [ "gtk" ];
+    # config.common = {
+    config.niri = {
+      # default = [ "gtk" ];
       "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
     };
   };

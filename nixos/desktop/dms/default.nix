@@ -1,7 +1,11 @@
 { pkgs, inputs, ... }:
 
 {
-  programs.dms-shell = {
+  imports = [
+    inputs.dms.nixosModules.dank-material-shell
+  ];
+
+  programs.dank-material-shell = {
     enable = true;
     # quickshell.packages = pkgs.quickshell;
     systemd.enable = true;
@@ -16,5 +20,13 @@
     plugins = {  # see: 
     };
   };
+
   # environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [
+    # dms depencies
+    pkgs.wtype
+    pkgs.matugen
+    pkgs.dux-gop
+    pkgs.khal
+  ];
 }
